@@ -18,7 +18,7 @@ namespace Redcap
     /// Go to your http://redcap_instance/api/help for Redcap Api documentations
     /// Author: Michael Tran tranpl@outlook.com, tranpl@vcu.edu
     /// </summary>
-    public class RedcapApi : IRedcap
+    public class RedcapApi : IRedcapApi
     {
         /// <summary>
         /// Redcap Api Token
@@ -2026,7 +2026,7 @@ namespace Redcap
         #endregion Metadata
         #region Projects
         /// <summary>
-        /// API Version 1.0.0+
+        /// API Version 1.0.0+ &#xA;
         /// From Redcap Version 6.11.0 
         /// 
         /// Create A New Project
@@ -3620,7 +3620,7 @@ namespace Redcap
                 return Ex.Message;
             }
         }
-        
+
         /// <summary>
         /// API Version 1.0.0+
         /// From Redcap Version 6.4.0
@@ -3705,7 +3705,7 @@ namespace Redcap
                 return Ex.Message;
             }
         }
-        
+
         /// <summary>
         /// API Version 1.0.0+
         /// From Redcap Version 6.4.0
