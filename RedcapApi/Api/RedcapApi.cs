@@ -35,15 +35,16 @@ namespace Redcap
         /// <example>
         /// https://localhost/redcap/api
         /// </example>
-        private static Uri _uri;
-
+        internal Uri _uri { private get; set; }
         /// <summary>
-        /// The version of redcap that the api is currently interacting with.
+        /// Resource Indicator for running instance API.
         /// </summary>
-        public static string Version;
-
+        public static Uri Uri { get; private set; }
         /// <summary>
         /// Constructor requires a valid url.
+        /// <para>
+        /// example: https://localhost/api
+        /// </para>
         /// </summary>
         /// <example>
         /// https://localhost/redcap/api
@@ -52,13 +53,15 @@ namespace Redcap
         /// This is the default constructor for version 1.0+
         /// </remarks>
         /// 
-        /// <param name="redcapApiUrl">Redcap instance URI</param>
+        /// <param name="redcapApiUrl">Redcap instance URL</param>
         public RedcapApi(string redcapApiUrl)
         {
             _uri = new Uri(redcapApiUrl);
+            Uri = _uri;
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         #region Arms
         /// <summary>
         /// <para>API Version 1.0.0+</para>
@@ -3362,7 +3365,7 @@ namespace Redcap
         /// <param name="content"></param>
         /// <param name="format">csv, json [default], xml</param>
         /// <returns>The current REDCap version number (three numbers delimited with two periods) as plain text - e.g., 4.13.18, 5.12.2, 6.0.0</returns>
-        public async Task<string> ExportRedcapVersionAsync(string token, Content content = Content.Version, ReturnFormat format = ReturnFormat.json)
+        public virtual async Task<string> ExportRedcapVersionAsync(string token, Content content = Content.Version, ReturnFormat format = ReturnFormat.json)
         {
             try
             {
@@ -3401,7 +3404,7 @@ namespace Redcap
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="format">csv, json [default], xml</param>
         /// <returns>The current REDCap version number (three numbers delimited with two periods) as plain text - e.g., 4.13.18, 5.12.2, 6.0.0</returns>
-        public async Task<string> ExportRedcapVersionAsync(string token, ReturnFormat format = ReturnFormat.json)
+        public virtual async Task<string> ExportRedcapVersionAsync(string token, ReturnFormat format = ReturnFormat.json)
         {
             try
             {
