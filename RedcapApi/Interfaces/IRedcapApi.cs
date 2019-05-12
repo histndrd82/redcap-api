@@ -1494,7 +1494,8 @@ namespace Redcap
         /// <para>
         /// Permissions Required: To use this method, you must have API Export privileges in the project.
         /// </para>
-        /// </summary>        /// <typeparam name="T"></typeparam>
+        /// </summary>        
+        /// <typeparam name="T"></typeparam>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="data">
         /// Contains the attributes of the user to be added to the project or whose privileges in the project are being updated, in which they are provided in the specified format. All values should be numerical with the exception of username, expiration, data_access_group, and forms. Please note that the 'forms' attribute is the only attribute that contains sub-elements (one for each data collection instrument), in which each form will have its own Form Rights value (see the key below to learn what each numerical value represents). Most user privilege attributes are boolean (0=No Access, 1=Access). Please notice the distinction between data_access_group (contains the unique DAG name for a user) and data_access_groups (denotes whether the user has access to the Data Access Groups page).
