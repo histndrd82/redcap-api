@@ -14,21 +14,20 @@ using static System.String;
 namespace Redcap
 {
     /// <summary>
-    /// This api interacts with redcap instances. https://project-redcap.org
-    /// Go to your http://redcap_instance/api/help for Redcap Api documentations
+    /// REDCap API Library allows programmers to interact with redcap(https://project-redcap.org)
+    /// Go to your http://your.redcap.instance/api/help for Redcap Api documentations
+    /// The REDCap API is an interface that allows external applications 
+    /// to connect to REDCap remotely, and is used for programmatically 
+    /// retrieving or modifying data or settings within REDCap, such as performing 
+    /// automated data imports/exports for a specified REDCap project. 
+    /// Programmers can use the REDCap API to make applications, websites, apps, widgets, 
+    /// and other projects that interact with REDCap. 
+    /// 
+    /// Virginia Commonwealth University
     /// Author: Michael Tran tranpl@outlook.com, tranpl@vcu.edu
     /// </summary>
     public class RedcapApi : IRedcapApi
     {
-        /// <summary>
-        /// Redcap Api Token
-        /// The token can be obtained from your redcap project.
-        /// </summary>
-        /// <example>
-        /// 4AAE216218B33700456A30898F2D6417
-        /// </example>
-        private static string _token;
-
         /// <summary>
         /// Redcap API Uri
         /// Location of your redcap instance
@@ -43,22 +42,6 @@ namespace Redcap
         /// </summary>
         public static string Version;
 
-        /// <summary>
-        /// Constructor requires an api token and a valid url.
-        /// </summary>
-        /// <remarks>
-        /// Token is required only for older APIs. As of version 1.0.0, token is required for each
-        /// method used.
-        /// </remarks>
-        /// <param name="apiToken">Redcap Api Token can be obtained from redcap project or redcap administrators</param>
-        /// <param name="redcapApiUrl">Redcap instance URI</param>
-        /// 
-        [Obsolete("Use constructor without token.")]
-        public RedcapApi(string apiToken, string redcapApiUrl)
-        {
-            _token = apiToken?.ToString();
-            _uri = new Uri(redcapApiUrl);
-        }
         /// <summary>
         /// Constructor requires a valid url.
         /// </summary>
@@ -75,19 +58,16 @@ namespace Redcap
             _uri = new Uri(redcapApiUrl);
         }
 
-        #region API Version 1.0.0+ Begin
 
         #region Arms
         /// <summary>
-        /// API Version 1.0.0+ **
-        /// From Redcap Version 4.7.0
-        /// Export Arms
-        /// This method allows you to export the Arms for a project
-        /// NOTE: This only works for longitudinal projects.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
+        /// <para>Export Arms</para>
+        /// <para>This method allows you to export the Arms for a project</para>
+        /// <para>NOTE: This only works for longitudinal projects.</para>
+        /// <para>Permissions Required: To use this method, you must have API Export privileges in the project.</para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="returnFormat">csv, json [default], xml</param>
         /// <param name="arms">an array of arm numbers that you wish to pull events for (by default, all events are pulled)</param>
@@ -136,19 +116,17 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+ **
-        /// From Redcap Version 4.7.0
-        /// Export Arms
-        /// This method allows you to export the Arms for a project
-        /// NOTE: This only works for longitudinal projects.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
+        /// <para>Export Arms</para>
+        /// <para>This method allows you to export the Arms for a project</para>
+        /// <para>NOTE: This only works for longitudinal projects.</para>
+        /// <para>Permissions Required: To use this method, you must have API Export privileges in the project.</para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">arm</param>
         /// <param name="returnFormat">csv, json [default], xml</param>
-        /// <param name="arms">e.g. ["1","2"] an array of arm numbers that you wish to pull events for (by default, all events are pulled)</param>
+        /// <param name="arms">an array of arm numbers that you wish to pull events for (by default, all events are pulled)</param>
         /// <param name="onErrorFormat">csv, json, xml - specifies the format of error messages. If you do not pass in this flag, it will select the default format for you passed based on the 'format' flag you passed in or if no format flag was passed in, it will default to 'json'.</param>
         /// <returns>Arms for the project in the format specified(only ones with Events available)</returns>
         public async Task<string> ExportArmsAsync(string token, Content content, ReturnFormat returnFormat = ReturnFormat.json, string[] arms = null, OnErrorFormat onErrorFormat = OnErrorFormat.json)
@@ -194,19 +172,18 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 4.7.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
         /// 
-        /// Import Arms
-        /// This method allows you to import Arms into a project or to rename existing Arms in a project. 
-        /// You may use the parameter override=1 as a 'delete all + import' action in order to erase all existing Arms in the project while importing new Arms. 
-        /// Notice: Because of the 'override' parameter's destructive nature, this method may only use override=1 for projects in Development status.
-        /// NOTE: This only works for longitudinal projects. 
-        /// 
+        /// <para>Import Arms</para>
+        /// <para>This method allows you to import Arms into a project or to rename existing Arms in a project. </para>
+        /// <para>You may use the parameter override=1 as a 'delete all + import' action in order to erase all existing Arms in the project while importing new Arms. </para>
+        /// <para>Notice: Because of the 'override' parameter's destructive nature, this method may only use override=1 for projects in Development status.</para>
+        /// <para>NOTE: This only works for longitudinal projects.</para> 
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.
-        /// </remarks>
         /// <typeparam name="T"></typeparam>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="overrideBhavior">0 - false [default], 1 - true — You may use override=1 as a 'delete all + import' action in order to erase all existing Arms in the project while importing new Arms. If override=0, then you can only add new Arms or rename existing ones. </param>
@@ -253,19 +230,18 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 4.7.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
         /// 
-        /// Import Arms
-        /// This method allows you to import Arms into a project or to rename existing Arms in a project. 
-        /// You may use the parameter override=1 as a 'delete all + import' action in order to erase all existing Arms in the project while importing new Arms. 
-        /// Notice: Because of the 'override' parameter's destructive nature, this method may only use override=1 for projects in Development status.
-        /// NOTE: This only works for longitudinal projects. 
-        /// 
+        /// <para>Import Arms</para>
+        /// <para>This method allows you to import Arms into a project or to rename existing Arms in a project. </para>
+        /// <para>You may use the parameter override=1 as a 'delete all + import' action in order to erase all existing Arms in the project while importing new Arms. </para>
+        /// <para>Notice: Because of the 'override' parameter's destructive nature, this method may only use override=1 for projects in Development status.</para>
+        /// <para>NOTE: This only works for longitudinal projects.</para> 
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.
-        /// </remarks>
         /// <typeparam name="T"></typeparam>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">arm</param>
@@ -313,20 +289,17 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 4.7.0
-        /// 
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
         /// Delete Arms
-        /// This method allows you to delete Arms from a project.
-        /// Notice: Because of this method's destructive nature, it is only available for use for projects in Development status. Additionally, please be aware that deleting an arm also automatically deletes all events that belong to that arm, and will also automatically delete any records/data that have been collected under that arm (this is non-reversible data loss).        
-        /// NOTE: This only works for longitudinal projects. 
+        /// <para>This method allows you to delete Arms from a project.</para>
+        /// Notice: Because of this method's destructive nature, it is only available for use for projects in Development status. Additionally, please be aware that deleting an arm also automatically deletes all events that belong to that arm, and will also automatically delete any records/data that have been collected under that arm (this is non-reversible data loss).    
+        /// <para>NOTE: This only works for longitudinal projects.</para> 
+        /// <para>Permissions Required: To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.</para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="arms">an array of arm numbers that you wish to delete</param>
-        /// <returns>Number of Arms deleted</returns>
+        /// <returns>Number of Events deleted</returns>
         public async Task<string> DeleteArmsAsync(string token, string[] arms)
         {
             try
@@ -366,22 +339,21 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 4.7.0
-        /// 
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
         /// Delete Arms
-        /// This method allows you to delete Arms from a project.
-        /// Notice: Because of this method's destructive nature, it is only available for use for projects in Development status. Additionally, please be aware that deleting an arm also automatically deletes all events that belong to that arm, and will also automatically delete any records/data that have been collected under that arm (this is non-reversible data loss).        
-        /// NOTE: This only works for longitudinal projects. 
+        /// <para>This method allows you to delete Arms from a project.</para>
+        /// Notice: Because of this method's destructive nature, it is only available for use for projects in Development status. Additionally, please be aware that deleting an arm also automatically deletes all events that belong to that arm, and will also automatically delete any records/data that have been collected under that arm (this is non-reversible data loss).    
+        /// <para>NOTE: This only works for longitudinal projects.</para> 
+        /// <para>Permissions Required: To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.</para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">arm</param>
         /// <param name="action">delete</param>
         /// <param name="arms">an array of arm numbers that you wish to delete</param>
-        /// <returns>Number of Arms deleted</returns>
+        /// <returns>
+        /// Number of Arms deleted
+        /// </returns>
         public async Task<string> DeleteArmsAsync(string token, Content content, RedcapAction action, string[] arms)
         {
             try
@@ -423,17 +395,14 @@ namespace Redcap
         #region Events
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 4.7.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
         /// 
-        /// Export Events
-        /// This method allows you to export the events for a project
-        /// NOTE: This only works for longitudinal projects.
-        /// 
+        /// <para>Export Events</para>
+        /// <para>This method allows you to export the events for a project</para>
+        /// <para>NOTE: This only works for longitudinal projects.</para>
+        /// <para>Permissions Required: To use this method, you must have API Export privileges in the project.</para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">
         /// The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.
         /// </param>
@@ -484,25 +453,19 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.11.0
-        /// 
-        /// Export Events
-        /// This method allows you to export the events for a project
-        /// NOTE: This only works for longitudinal projects.
-        /// 
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
+        /// <para>Export Arms</para>
+        /// <para>This method allows you to export the Arms for a project</para>
+        /// <para>NOTE: This only works for longitudinal projects.</para>
+        /// <para>Permissions Required: To use this method, you must have API Export privileges in the project.</para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
-        /// <param name="token">
-        /// The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.
-        /// </param>
-        /// <param name="content">event</param>
-        /// <param name="format">csv, json [default], xml</param>
-        /// <param name="arms"></param>
+        /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
+        /// <param name="content">arm</param>
+        /// <param name="format"></param>
+        /// <param name="arms">an array of arm numbers that you wish to pull events for (by default, all events are pulled)</param>
         /// <param name="onErrorFormat">csv, json, xml - specifies the format of error messages. If you do not pass in this flag, it will select the default format for you passed based on the 'format' flag you passed in or if no format flag was passed in, it will default to 'json'.</param>
-        /// <returns>Events for the project in the format specified</returns>
+        /// <returns>Arms for the project in the format specified(only ones with Events available)</returns>
         public async Task<string> ExportEventsAsync(string token, Content content = Content.Event, ReturnFormat format = ReturnFormat.json, string[] arms = null, OnErrorFormat onErrorFormat = OnErrorFormat.json)
         {
             try
@@ -546,16 +509,16 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.11.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.11.0</para>
         /// 
-        /// Import Events
-        /// This method allows you to import Events into a project or to update existing Events' attributes, such as the event name, days offset, etc. The unique event name of an Event cannot be changed because it is auto-generated by REDCap. Please note that the only way to update an existing Event is to provide the unique_event_name attribute, and if the unique_event_name attribute is missing for an Event being imported (when override=0), it will assume it to be a new Event that should be created. Notice: Because of the 'override' parameter's destructive nature, this method may only use override=1 for projects in Development status.
-        /// NOTE: This only works for longitudinal projects. 
+        /// <para>Import Events</para>
+        /// <para>This method allows you to import Events into a project or to update existing Events' attributes, such as the event name, days offset, etc. The unique event name of an Event cannot be changed because it is auto-generated by REDCap. Please note that the only way to update an existing Event is to provide the unique_event_name attribute, and if the unique_event_name attribute is missing for an Event being imported (when override=0), it will assume it to be a new Event that should be created. Notice: Because of the 'override' parameter's destructive nature, this method may only use override=1 for projects in Development status.</para>
+        /// <para>NOTE: This only works for longitudinal projects. </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="overRideBehavior">0 - false [default], 1 - true — You may use override=1 as a 'delete all + import' action in order to erase all existing Events in the project while importing new Events. If override=0, then you can only add new Events or modify existing ones. </param>
         /// <typeparam name="T"></typeparam>
@@ -608,16 +571,16 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.11.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.11.0</para>
         /// 
-        /// Import Events
-        /// This method allows you to import Events into a project or to update existing Events' attributes, such as the event name, days offset, etc. The unique event name of an Event cannot be changed because it is auto-generated by REDCap. Please note that the only way to update an existing Event is to provide the unique_event_name attribute, and if the unique_event_name attribute is missing for an Event being imported (when override=0), it will assume it to be a new Event that should be created. Notice: Because of the 'override' parameter's destructive nature, this method may only use override=1 for projects in Development status.
-        /// NOTE: This only works for longitudinal projects. 
+        /// <para>Import Events</para>
+        /// <para>This method allows you to import Events into a project or to update existing Events' attributes, such as the event name, days offset, etc. The unique event name of an Event cannot be changed because it is auto-generated by REDCap. Please note that the only way to update an existing Event is to provide the unique_event_name attribute, and if the unique_event_name attribute is missing for an Event being imported (when override=0), it will assume it to be a new Event that should be created. Notice: Because of the 'override' parameter's destructive nature, this method may only use override=1 for projects in Development status.</para>
+        /// <para>NOTE: This only works for longitudinal projects. </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">event</param>
         /// <param name="action">import</param>
@@ -672,20 +635,19 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.11.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.11.0</para>
         /// 
-        /// Delete Events
-        /// This method allows you to delete Events from a project. 
-        /// Notice: Because of this method's destructive nature, it is only available for use for projects in Development status. 
-        /// Additionally, please be aware that deleting an event will automatically delete any records/data that have been collected under that event (this is non-reversible data loss).
-        /// NOTE: This only works for longitudinal projects.
+        /// <para>Delete Events</para>
+        /// <para>This method allows you to delete Events from a project.</para>
+        /// <para>Notice: Because of this method's destructive nature, it is only available for use for projects in Development status.</para> 
+        /// <para>Additionally, please be aware that deleting an event will automatically delete any records/data that have been collected under that event (this is non-reversible data loss).</para>
+        /// <para>NOTE: This only works for longitudinal projects.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        ///  
-        /// To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.
-        /// </remarks>
-        /// <param name="token"></param>
+        /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="events">Array of unique event names</param>
         /// <returns>Number of Events deleted</returns>
         public async Task<string> DeleteEventsAsync(string token, string[] events = null)
@@ -730,22 +692,21 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.11.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.11.0</para>
         /// 
-        /// Delete Events
-        /// This method allows you to delete Events from a project. 
-        /// Notice: Because of this method's destructive nature, it is only available for use for projects in Development status. 
-        /// Additionally, please be aware that deleting an event will automatically delete any records/data that have been collected under that event (this is non-reversible data loss).
-        /// NOTE: This only works for longitudinal projects.
+        /// <para>Delete Events</para>
+        /// <para>This method allows you to delete Events from a project.</para>
+        /// <para>Notice: Because of this method's destructive nature, it is only available for use for projects in Development status.</para> 
+        /// <para>Additionally, please be aware that deleting an event will automatically delete any records/data that have been collected under that event (this is non-reversible data loss).</para>
+        /// <para>NOTE: This only works for longitudinal projects.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        ///  
-        /// To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.
-        /// </remarks>
-        /// <param name="token"></param>
-        /// <param name="content"></param>
-        /// <param name="action"></param>
+        /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
+        /// <param name="content">event</param>
+        /// <param name="action">delete</param>
         /// <param name="events">Array of unique event names</param>
         /// <returns>Number of Events deleted</returns>
         public async Task<string> DeleteEventsAsync(string token, Content content, RedcapAction action, string[] events = null)
@@ -792,25 +753,26 @@ namespace Redcap
         #region Field Names
 
         /// <summary>
-        /// Export List of Export Field Names (i.e. variables used during exports and imports)
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.x+</para>
+        /// <para>Export List of Export Field Names (i.e. variables used during exports and imports)</para>
         /// 
+        /// <para>
+        /// This method returns a list of the export/import-specific version of field names for all fields (or for one field, if desired) in a project. This is mostly used for checkbox fields because during data exports and data imports, checkbox fields have a different variable name used than the exact one defined for them in the Online Designer and Data Dictionary, in which *each checkbox option* gets represented as its own export field name in the following format: field_name + triple underscore + converted coded value for the choice. 
+        /// For non-checkbox fields, the export field name will be exactly the same as the original field name.
+        /// </para>
+        ///  
+        /// <para>
         /// This method returns a list of the export/import-specific version of field names for all fields (or for one field, if desired) in a project. 
         /// This is mostly used for checkbox fields because during data exports and data imports, checkbox fields have a different variable name used than the exact one defined for them in the Online Designer and Data Dictionary, in which *each checkbox option* gets represented as its own export field name in the following format: field_name + triple underscore + converted coded value for the choice. 
-        /// For non-checkbox fields, the export field name will be exactly the same as the original field name. 
-        /// Note: The following field types will be automatically removed from the list returned by this method since they cannot be utilized during the data import process: 'calc', 'file', and 'descriptive'.
-        /// 
-        /// The list that is returned will contain the three following attributes for each field/choice: 'original_field_name', 'choice_value', and 'export_field_name'. 
-        /// The choice_value attribute represents the raw coded value for a checkbox choice.For non-checkbox fields, the choice_value attribute will always be blank/empty.
-        /// The export_field_name attribute represents the export/import-specific version of that field name.
+        /// For non-checkbox fields, the export field name will be exactly the same as the original field name. Note: The following field types will be automatically removed from the list returned by this method since they cannot be utilized during the data import process: 'calc', 'file', and 'descriptive'.
+        /// </para>
+        /// <para>Permissions Required: To use this method, you must have API Export privileges in the project.</para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="format">csv, json [default], xml</param>
         /// <param name="field">A field's variable name. By default, all fields are returned, but if field is provided, then it will only the export field name(s) for that field. If the field name provided is invalid, it will return an error.</param>
-        /// <param name="onErrorFormat">csv, json [default], xml - specifies the format of error messages. If you do not pass in this flag, it will select the default format for you passed based on the 'format' flag you passed in or if no format flag was passed in, it will default to 'json'. 
-        /// The list that is returned will contain the original field name (variable) of the field and also the export field name(s) of that field.</param>
+        /// <param name="onErrorFormat">csv, json [default], xml - specifies the format of error messages. If you do not pass in this flag, it will select the default format for you passed based on the 'format' flag you passed in or if no format flag was passed in, it will default to 'json'.</param> 
         /// <returns>Returns a list of the export/import-specific version of field names for all fields (or for one field, if desired) in a project in the format specified and ordered by their field order . 
         /// The list that is returned will contain the three following attributes for each field/choice: 'original_field_name', 'choice_value', and 'export_field_name'. The choice_value attribute represents the raw coded value for a checkbox choice. For non-checkbox fields, the choice_value attribute will always be blank/empty. The export_field_name attribute represents the export/import-specific version of that field name.
         /// </returns>
@@ -849,26 +811,29 @@ namespace Redcap
 
 
         /// <summary>
-        /// Export List of Export Field Names (i.e. variables used during exports and imports)
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.x+</para>
+        /// <para>Export List of Export Field Names (i.e. variables used during exports and imports)</para>
         /// 
+        /// <para>
+        /// This method returns a list of the export/import-specific version of field names for all fields (or for one field, if desired) in a project. This is mostly used for checkbox fields because during data exports and data imports, checkbox fields have a different variable name used than the exact one defined for them in the Online Designer and Data Dictionary, in which *each checkbox option* gets represented as its own export field name in the following format: field_name + triple underscore + converted coded value for the choice. 
+        /// For non-checkbox fields, the export field name will be exactly the same as the original field name.
+        /// </para>
+        /// 
+        ///  
+        /// <para>
         /// This method returns a list of the export/import-specific version of field names for all fields (or for one field, if desired) in a project. 
         /// This is mostly used for checkbox fields because during data exports and data imports, checkbox fields have a different variable name used than the exact one defined for them in the Online Designer and Data Dictionary, in which *each checkbox option* gets represented as its own export field name in the following format: field_name + triple underscore + converted coded value for the choice. 
-        /// For non-checkbox fields, the export field name will be exactly the same as the original field name. 
-        /// Note: The following field types will be automatically removed from the list returned by this method since they cannot be utilized during the data import process: 'calc', 'file', and 'descriptive'.
-        /// 
-        /// The list that is returned will contain the three following attributes for each field/choice: 'original_field_name', 'choice_value', and 'export_field_name'. 
-        /// The choice_value attribute represents the raw coded value for a checkbox choice.For non-checkbox fields, the choice_value attribute will always be blank/empty.
-        /// The export_field_name attribute represents the export/import-specific version of that field name.
+        /// For non-checkbox fields, the export field name will be exactly the same as the original field name. Note: The following field types will be automatically removed from the list returned by this method since they cannot be utilized during the data import process: 'calc', 'file', and 'descriptive'.
+        /// </para>
+        /// <para>Permissions Required: To use this method, you must have API Export privileges in the project.</para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
+        /// 
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">exportFieldNames</param>
         /// <param name="format">csv, json [default], xml</param>
         /// <param name="field">A field's variable name. By default, all fields are returned, but if field is provided, then it will only the export field name(s) for that field. If the field name provided is invalid, it will return an error.</param>
-        /// <param name="onErrorFormat">csv, json [default], xml - specifies the format of error messages. If you do not pass in this flag, it will select the default format for you passed based on the 'format' flag you passed in or if no format flag was passed in, it will default to 'json'. 
-        /// The list that is returned will contain the original field name (variable) of the field and also the export field name(s) of that field.</param>
+        /// <param name="onErrorFormat">csv, json [default], xml - specifies the format of error messages. If you do not pass in this flag, it will select the default format for you passed based on the 'format' flag you passed in or if no format flag was passed in, it will default to 'json'.</param> 
         /// <returns>Returns a list of the export/import-specific version of field names for all fields (or for one field, if desired) in a project in the format specified and ordered by their field order . 
         /// The list that is returned will contain the three following attributes for each field/choice: 'original_field_name', 'choice_value', and 'export_field_name'. The choice_value attribute represents the raw coded value for a checkbox choice. For non-checkbox fields, the choice_value attribute will always be blank/empty. The export_field_name attribute represents the export/import-specific version of that field name.
         /// </returns>
@@ -908,17 +873,21 @@ namespace Redcap
         #region Files
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export a File
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export a File</para>
+        /// <para>**Allows for file download to a path.**</para>
+        /// <para>
         /// This method allows you to download a document that has been attached to an individual record for a File Upload field. Please note that this method may also be used for Signature fields (i.e. File Upload fields with 'signature' validation type).
-        /// Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API file export will fail and return an error. And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then the API file export will fail and return an error *only if* the File Upload field has been tagged as an Identifier field.To make sure that your API request does not return an error, you should have 'Full Data Set' export rights in the project.
+        /// Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API file export will fail and return an error. 
+        /// And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then the API file export will fail and return an error *only if* the File Upload field has been tagged as an Identifier field.To make sure that your API request does not return an error, you should have 'Full Data Set' export rights in the project.
+        /// </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// <para>
+        /// How to obtain the filename of the file: The MIME type of the file, along with the name of the file and its extension, can be found in the header of the returned response. Thus in order to determine these attributes of the file being exported, you will need to parse the response header. Example: content-type = application/vnd.openxmlformats-officedocument.wordprocessingml.document; name='FILE_NAME.docx'
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
-        /// <example>
-        /// The MIME type of the file, along with the name of the file and its extension, can be found in the header of the returned response. Thus in order to determine these attributes of the file being exported, you will need to parse the response header. Example: content-type = application/vnd.openxmlformats-officedocument.wordprocessingml.document; name='FILE_NAME.docx'
-        /// </example>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="record">the record ID</param>
         /// <param name="field">the name of the field that contains the file</param>
@@ -926,7 +895,7 @@ namespace Redcap
         /// <param name="repeatInstance">(only for projects with repeating instruments/events) The repeat instance number of the repeating event (if longitudinal) or the repeating instrument (if classic or longitudinal). Default value is '1'.</param>
         /// <param name="onErrorFormat">csv, json, xml - specifies the format of error messages. If you do not pass in this flag, it will select the default format for you passed based on the 'format' flag you passed in or if no format flag was passed in, it will default to 'xml'.</param>
         /// <param name="filePath">File path which the file will be saved.</param>
-        /// <returns>the contents of the file</returns>
+        /// <returns>the file name that was exported</returns>
         public async Task<string> ExportFileAsync(string token, string record, string field, string eventName, string repeatInstance = "1", OnErrorFormat onErrorFormat = OnErrorFormat.json, string filePath = null)
         {
             try
@@ -985,18 +954,21 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export a File
-        /// **Allows for file download to a path.**
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export a File</para>
+        /// <para>**Allows for file download to a path.**</para>
+        /// <para>
         /// This method allows you to download a document that has been attached to an individual record for a File Upload field. Please note that this method may also be used for Signature fields (i.e. File Upload fields with 'signature' validation type).
-        /// Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API file export will fail and return an error. And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then the API file export will fail and return an error *only if* the File Upload field has been tagged as an Identifier field.To make sure that your API request does not return an error, you should have 'Full Data Set' export rights in the project.
+        /// Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API file export will fail and return an error. 
+        /// And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then the API file export will fail and return an error *only if* the File Upload field has been tagged as an Identifier field.To make sure that your API request does not return an error, you should have 'Full Data Set' export rights in the project.
+        /// </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// <para>
+        /// How to obtain the filename of the file: The MIME type of the file, along with the name of the file and its extension, can be found in the header of the returned response. Thus in order to determine these attributes of the file being exported, you will need to parse the response header. Example: content-type = application/vnd.openxmlformats-officedocument.wordprocessingml.document; name='FILE_NAME.docx'
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
-        /// <example>
-        /// The MIME type of the file, along with the name of the file and its extension, can be found in the header of the returned response. Thus in order to determine these attributes of the file being exported, you will need to parse the response header. Example: content-type = application/vnd.openxmlformats-officedocument.wordprocessingml.document; name='FILE_NAME.docx'
-        /// </example>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">file</param>
         /// <param name="action">export</param>
@@ -1057,14 +1029,14 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Import a File
-        /// This method allows you to upload a document that will be attached to an individual record for a File Upload field. Please note that this method may NOT be used for Signature fields (i.e. File Upload fields with 'signature' validation type) because a signature can only be captured and stored using the web interface. 
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Import a File</para>
+        /// <para>This method allows you to upload a document that will be attached to an individual record for a File Upload field. Please note that this method may NOT be used for Signature fields (i.e. File Upload fields with 'signature' validation type) because a signature can only be captured and stored using the web interface. </para>
+        /// 
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges in the project.
-        /// If you pass in a record parameter that does not exist, Redcap will create it for you.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="record">the record ID</param>
         /// <param name="field">the name of the field that contains the file</param>
@@ -1133,14 +1105,14 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Import a File
-        /// This method allows you to upload a document that will be attached to an individual record for a File Upload field. Please note that this method may NOT be used for Signature fields (i.e. File Upload fields with 'signature' validation type) because a signature can only be captured and stored using the web interface. 
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Import a File</para>
+        /// <para>This method allows you to upload a document that will be attached to an individual record for a File Upload field. Please note that this method may NOT be used for Signature fields (i.e. File Upload fields with 'signature' validation type) because a signature can only be captured and stored using the web interface. </para>
+        /// 
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges in the project.
-        /// If you pass in a record parameter that does not exist, Redcap will create it for you.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">file</param>
         /// <param name="action">import</param>
@@ -1211,13 +1183,13 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Delete a File
-        /// This method allows you to remove a document that has been attached to an individual record for a File Upload field. Please note that this method may also be used for Signature fields (i.e. File Upload fields with 'signature' validation type).
+        /// <para>API Version 1.0.0+</para> 
+        /// <para>Delete a File</para>
+        /// <para>This method allows you to remove a document that has been attached to an individual record for a File Upload field. Please note that this method may also be used for Signature fields (i.e. File Upload fields with 'signature' validation type).</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Import/Update privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="record">the record ID</param>
         /// <param name="field">the name of the field that contains the file</param>
@@ -1267,13 +1239,13 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Delete a File
-        /// This method allows you to remove a document that has been attached to an individual record for a File Upload field. Please note that this method may also be used for Signature fields (i.e. File Upload fields with 'signature' validation type).
+        /// <para>API Version 1.0.0+</para> 
+        /// <para>Delete a File</para>
+        /// <para>This method allows you to remove a document that has been attached to an individual record for a File Upload field. Please note that this method may also be used for Signature fields (i.e. File Upload fields with 'signature' validation type).</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Import/Update privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">file</param>
         /// <param name="action">delete</param>
@@ -1327,14 +1299,15 @@ namespace Redcap
         #region Instruments
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export Instruments (Data Entry Forms)
-        /// This method allows you to export a list of the data collection instruments for a project. 
-        /// This includes their unique instrument name as seen in the second column of the Data Dictionary, as well as each instrument's corresponding instrument label, which is seen on a project's left-hand menu when entering data. The instruments will be ordered according to their order in the project.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export Instruments (Data Entry Forms)</para>
+        /// <para>This method allows you to export a list of the data collection instruments for a project. </para>
+        /// <para>This includes their unique instrument name as seen in the second column of the Data Dictionary, as well as each instrument's corresponding instrument label, which is seen on a project's left-hand menu when entering data. The instruments will be ordered according to their order in the project.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// 
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="format">csv, json [default], xml</param>
         /// <returns>Instruments for the project in the format specified and will be ordered according to their order in the project.</returns>
@@ -1366,14 +1339,15 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export Instruments (Data Entry Forms)
-        /// This method allows you to export a list of the data collection instruments for a project. 
-        /// This includes their unique instrument name as seen in the second column of the Data Dictionary, as well as each instrument's corresponding instrument label, which is seen on a project's left-hand menu when entering data. The instruments will be ordered according to their order in the project.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export Instruments (Data Entry Forms)</para>
+        /// <para>This method allows you to export a list of the data collection instruments for a project. </para>
+        /// <para>This includes their unique instrument name as seen in the second column of the Data Dictionary, as well as each instrument's corresponding instrument label, which is seen on a project's left-hand menu when entering data. The instruments will be ordered according to their order in the project.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// 
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">instrument</param>
         /// <param name="format">csv, json [default], xml</param>
@@ -1406,16 +1380,17 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.4.0
-        /// Export PDF file of Data Collection Instruments (either as blank or with data)
-        /// This method allows you to export a PDF file for any of the following: 1) a single data collection instrument (blank), 2) all instruments (blank), 3) a single instrument (with data from a single record), 4) all instruments (with data from a single record), or 5) all instruments (with data from ALL records). 
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.4.0</para>
+        /// <para>Export PDF file of Data Collection Instruments (either as blank or with data)</para>
+        /// <para>This method allows you to export a PDF file for any of the following: 1) a single data collection instrument (blank), 2) all instruments (blank), 3) a single instrument (with data from a single record), 4) all instruments (with data from a single record), or 5) all instruments (with data from ALL records). 
         /// This is the exact same PDF file that is downloadable from a project's data entry form in the web interface, and additionally, the user's privileges with regard to data exports will be applied here just like they are when downloading the PDF in the web interface (e.g., if they have de-identified data export rights, then it will remove data from certain fields in the PDF). 
         /// If the user has 'No Access' data export rights, they will not be able to use this method, and an error will be returned.
+        /// </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="recordId">the record ID. The value is blank by default. If record is blank, it will return the PDF as blank (i.e. with no data). If record is provided, it will return a single instrument or all instruments containing data from that record only.</param>
         /// <param name="eventName">the unique event name - only for longitudinal projects. For a longitudinal project, if record is not blank and event is blank, it will return data for all events from that record. If record is not blank and event is not blank, it will return data only for the specified event from that record.</param>
@@ -1469,16 +1444,17 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.4.0
-        /// Export PDF file of Data Collection Instruments (either as blank or with data)
-        /// This method allows you to export a PDF file for any of the following: 1) a single data collection instrument (blank), 2) all instruments (blank), 3) a single instrument (with data from a single record), 4) all instruments (with data from a single record), or 5) all instruments (with data from ALL records). 
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.4.0</para>
+        /// <para>Export PDF file of Data Collection Instruments (either as blank or with data)</para>
+        /// <para>This method allows you to export a PDF file for any of the following: 1) a single data collection instrument (blank), 2) all instruments (blank), 3) a single instrument (with data from a single record), 4) all instruments (with data from a single record), or 5) all instruments (with data from ALL records). 
         /// This is the exact same PDF file that is downloadable from a project's data entry form in the web interface, and additionally, the user's privileges with regard to data exports will be applied here just like they are when downloading the PDF in the web interface (e.g., if they have de-identified data export rights, then it will remove data from certain fields in the PDF). 
         /// If the user has 'No Access' data export rights, they will not be able to use this method, and an error will be returned.
+        /// </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">pdf</param>
         /// <param name="recordId">the record ID. The value is blank by default. If record is blank, it will return the PDF as blank (i.e. with no data). If record is provided, it will return a single instrument or all instruments containing data from that record only.</param>
@@ -2239,14 +2215,14 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export Project Information
-        /// This method allows you to export some of the basic attributes of a given REDCap project, such as the project's title, if it is longitudinal, if surveys are enabled, the time the project was created and moved to production, etc.
-        /// </summary>
-        /// <remarks>
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export Project Information</para>
+        /// <para>This method allows you to export some of the basic attributes of a given REDCap project, such as the project's title, if it is longitudinal, if surveys are enabled, the time the project was created and moved to production, etc.</para>
         /// 
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// </summary>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">project</param>
         /// <param name="format">csv, json [default], xml</param>
@@ -2283,14 +2259,14 @@ namespace Redcap
             }
         }
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export Project Information
-        /// This method allows you to export some of the basic attributes of a given REDCap project, such as the project's title, if it is longitudinal, if surveys are enabled, the time the project was created and moved to production, etc.
-        /// </summary>
-        /// <remarks>
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export Project Information</para>
+        /// <para>This method allows you to export some of the basic attributes of a given REDCap project, such as the project's title, if it is longitudinal, if surveys are enabled, the time the project was created and moved to production, etc.</para>
         /// 
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// </summary>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="format">csv, json [default], xml</param>
         /// <param name="onErrorFormat">csv, json, xml - specifies the format of error messages. If you do not pass in this flag, it will select the default format for you passed based on the 'format' flag you passed in or if no format flag was passed in, it will default to 'json'.</param>
@@ -2327,19 +2303,24 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.12.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.12.0</para>
         /// 
-        /// Export Entire Project as REDCap XML File (containing metadata and data)
-        /// The entire project(all records, events, arms, instruments, fields, and project attributes) can be downloaded as a single XML file, which is in CDISC ODM format(ODM version 1.3.1). This XML file can be used to create a clone of the project(including its data, optionally) on this REDCap server or on another REDCap server (it can be uploaded on the Create New Project page). Because it is in CDISC ODM format, it can also be used to import the project into another ODM-compatible system. NOTE: All the option paramters listed below ONLY apply to data returned if the 'returnMetadataOnly' parameter is set to FALSE (default). For this API method, ALL metadata (all fields, forms, events, and arms) will always be exported.Only the data returned can be filtered using the optional parameters.
-        /// Note about export rights: If the 'returnMetadataOnly' parameter is set to FALSE, then please be aware that Data Export user rights will be applied to any data returned from this API request. For example, if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project. 
+        /// <para>Export Entire Project as REDCap XML File (containing metadata and data)</para>
+        /// <para>The entire project (all records, events, arms, instruments, fields, and project attributes) can be downloaded as a single XML file, which is in CDISC ODM format (ODM version 1.3.1). 
+        /// This XML file can be used to create a clone of the project (including its data, optionally) on this REDCap server or on another REDCap server (it can be uploaded on the Create New Project page). 
+        /// Because it is in CDISC ODM format, it can also be used to import the project into another ODM-compatible system. NOTE: All the option paramters listed below ONLY apply to data returned if the 'returnMetadataOnly' parameter is set to FALSE (default). For this API method, ALL metadata (all fields, forms, events, and arms) will always be exported. Only the data returned can be filtered using the optional parameters.
+        /// </para>
+        /// <para>
+        /// Note about export rights: If the 'returnMetadataOnly' parameter is set to FALSE, then please be aware that Data Export user rights will be applied to any data returned from this API request. For example, if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. 
+        /// To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.
+        /// </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// 
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
-        /// <param name="content">project_xml</param>
+        /// <param name="content"></param>
         /// <param name="returnMetadataOnly">true, false [default] - TRUE returns only metadata (all fields, forms, events, and arms), whereas FALSE returns all metadata and also data (and optionally filters the data according to any of the optional parameters provided in the request) </param>
         /// <param name="records">an array of record names specifying specific records you wish to pull (by default, all records are pulled)</param>
         /// <param name="fields">an array of field names specifying specific fields you wish to pull (by default, all fields are pulled)</param>
@@ -2407,17 +2388,22 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.12.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.12.0</para>
         /// 
-        /// Export Entire Project as REDCap XML File (containing metadata and data)
-        /// The entire project(all records, events, arms, instruments, fields, and project attributes) can be downloaded as a single XML file, which is in CDISC ODM format(ODM version 1.3.1). This XML file can be used to create a clone of the project(including its data, optionally) on this REDCap server or on another REDCap server (it can be uploaded on the Create New Project page). Because it is in CDISC ODM format, it can also be used to import the project into another ODM-compatible system. NOTE: All the option paramters listed below ONLY apply to data returned if the 'returnMetadataOnly' parameter is set to FALSE (default). For this API method, ALL metadata (all fields, forms, events, and arms) will always be exported.Only the data returned can be filtered using the optional parameters.
-        /// Note about export rights: If the 'returnMetadataOnly' parameter is set to FALSE, then please be aware that Data Export user rights will be applied to any data returned from this API request. For example, if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project. 
+        /// <para>Export Entire Project as REDCap XML File (containing metadata and data)</para>
+        /// <para>The entire project (all records, events, arms, instruments, fields, and project attributes) can be downloaded as a single XML file, which is in CDISC ODM format (ODM version 1.3.1). 
+        /// This XML file can be used to create a clone of the project (including its data, optionally) on this REDCap server or on another REDCap server (it can be uploaded on the Create New Project page). 
+        /// Because it is in CDISC ODM format, it can also be used to import the project into another ODM-compatible system. NOTE: All the option paramters listed below ONLY apply to data returned if the 'returnMetadataOnly' parameter is set to FALSE (default). For this API method, ALL metadata (all fields, forms, events, and arms) will always be exported. Only the data returned can be filtered using the optional parameters.
+        /// </para>
+        /// <para>
+        /// Note about export rights: If the 'returnMetadataOnly' parameter is set to FALSE, then please be aware that Data Export user rights will be applied to any data returned from this API request. For example, if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. 
+        /// To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.
+        /// </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// 
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="returnMetadataOnly">true, false [default] - TRUE returns only metadata (all fields, forms, events, and arms), whereas FALSE returns all metadata and also data (and optionally filters the data according to any of the optional parameters provided in the request) </param>
         /// <param name="records">an array of record names specifying specific records you wish to pull (by default, all records are pulled)</param>
@@ -2488,18 +2474,17 @@ namespace Redcap
         #endregion Projects
         #region Records
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.18.0
-        /// Generate Next Record Name
-        /// To be used by projects with record auto-numbering enabled, this method exports the next potential record ID for a project. It generates the next record name by determining the current maximum numerical record ID and then incrementing it by one.
-        /// Note: This method does not create a new record, but merely determines what the next record name would be.
-        /// If using Data Access Groups (DAGs) in the project, this method accounts for the special formatting of the record name for users in DAGs (e.g., DAG-ID); in this case, it only assigns the next value for ID for all numbers inside a DAG. For example, if a DAG has a corresponding DAG number of 223 wherein records 223-1 and 223-2 already exist, then the next record will be 223-3 if the API user belongs to the DAG that has DAG number 223. (The DAG number is auto-assigned by REDCap for each DAG when the DAG is first created.) When generating a new record name in a DAG, the method considers all records in the entire project when determining the maximum record ID, including those that might have been originally created in that DAG but then later reassigned to another DAG.
-        /// Note: This method functions the same even for projects that do not have record auto-numbering enabled.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.18.0</para>
+        /// <para>Generate Next Record Name</para>
+        /// <para>To be used by projects with record auto-numbering enabled, this method exports the next potential record ID for a project. It generates the next record name by determining the current maximum numerical record ID and then incrementing it by one.</para>
+        /// <para>Note: This method does not create a new record, but merely determines what the next record name would be.</para>
+        /// <para>If using Data Access Groups (DAGs) in the project, this method accounts for the special formatting of the record name for users in DAGs (e.g., DAG-ID); in this case, it only assigns the next value for ID for all numbers inside a DAG. For example, if a DAG has a corresponding DAG number of 223 wherein records 223-1 and 223-2 already exist, then the next record will be 223-3 if the API user belongs to the DAG that has DAG number 223. (The DAG number is auto-assigned by REDCap for each DAG when the DAG is first created.) When generating a new record name in a DAG, the method considers all records in the entire project when determining the maximum record ID, including those that might have been originally created in that DAG but then later reassigned to another DAG.</para>
+        /// <para>Note: This method functions the same even for projects that do not have record auto-numbering enabled.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// 
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <returns>The maximum integer record ID + 1.</returns>
         public async Task<string> GenerateNextRecordNameAsync(string token)
@@ -2528,18 +2513,17 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.18.0
-        /// Generate Next Record Name
-        /// To be used by projects with record auto-numbering enabled, this method exports the next potential record ID for a project. It generates the next record name by determining the current maximum numerical record ID and then incrementing it by one.
-        /// Note: This method does not create a new record, but merely determines what the next record name would be.
-        /// If using Data Access Groups (DAGs) in the project, this method accounts for the special formatting of the record name for users in DAGs (e.g., DAG-ID); in this case, it only assigns the next value for ID for all numbers inside a DAG. For example, if a DAG has a corresponding DAG number of 223 wherein records 223-1 and 223-2 already exist, then the next record will be 223-3 if the API user belongs to the DAG that has DAG number 223. (The DAG number is auto-assigned by REDCap for each DAG when the DAG is first created.) When generating a new record name in a DAG, the method considers all records in the entire project when determining the maximum record ID, including those that might have been originally created in that DAG but then later reassigned to another DAG.
-        /// Note: This method functions the same even for projects that do not have record auto-numbering enabled.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.18.0</para>
+        /// <para>Generate Next Record Name</para>
+        /// <para>To be used by projects with record auto-numbering enabled, this method exports the next potential record ID for a project. It generates the next record name by determining the current maximum numerical record ID and then incrementing it by one.</para>
+        /// <para>Note: This method does not create a new record, but merely determines what the next record name would be.</para>
+        /// <para>If using Data Access Groups (DAGs) in the project, this method accounts for the special formatting of the record name for users in DAGs (e.g., DAG-ID); in this case, it only assigns the next value for ID for all numbers inside a DAG. For example, if a DAG has a corresponding DAG number of 223 wherein records 223-1 and 223-2 already exist, then the next record will be 223-3 if the API user belongs to the DAG that has DAG number 223. (The DAG number is auto-assigned by REDCap for each DAG when the DAG is first created.) When generating a new record name in a DAG, the method considers all records in the entire project when determining the maximum record ID, including those that might have been originally created in that DAG but then later reassigned to another DAG.</para>
+        /// <para>Note: This method functions the same even for projects that do not have record auto-numbering enabled.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// 
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">generateNextRecordName</param>
         /// <returns>The maximum integer record ID + 1.</returns>
@@ -2569,14 +2553,14 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export Records
-        /// This method allows you to export a set of records for a project.
-        /// Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API data export will fail and return an error. And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export Records</para>
+        /// <para>This method allows you to export a set of records for a project.</para>
+        /// <para>Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API data export will fail and return an error. And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="format">csv, json [default], xml, odm ('odm' refers to CDISC ODM XML format, specifically ODM version 1.3.1)</param>
         /// <param name="redcapDataType">flat - output as one record per row [default], eav - output as one data point per row. Non-longitudinal: Will have the fields - record*, field_name, value. Longitudinal: Will have the fields - record*, field_name, value, redcap_event_name</param>
@@ -2666,16 +2650,16 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export Records
-        /// This method allows you to export a set of records for a project.
-        /// Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API data export will fail and return an error. And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export Records</para>
+        /// <para>This method allows you to export a set of records for a project.</para>
+        /// <para>Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API data export will fail and return an error. And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
-        /// <param name="content">record</param>
+        /// <param name="content"></param>
         /// <param name="format">csv, json [default], xml, odm ('odm' refers to CDISC ODM XML format, specifically ODM version 1.3.1)</param>
         /// <param name="redcapDataType">flat - output as one record per row [default], eav - output as one data point per row. Non-longitudinal: Will have the fields - record*, field_name, value. Longitudinal: Will have the fields - record*, field_name, value, redcap_event_name</param>
         /// <param name="records">an array of record names specifying specific records you wish to pull (by default, all records are pulled)</param>
@@ -2764,14 +2748,15 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0++
-        /// Export Record
-        /// This method allows you to export a single record for a project.
-        /// Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API data export will fail and return an error. And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export Record</para>
+        /// <para>This method allows you to export a single record for a project.</para>
+        /// <para>Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API data export will fail and return an error. And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.</para>
+        /// 
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">record</param>
         /// <param name="format">csv, json [default], xml, odm ('odm' refers to CDISC ODM XML format, specifically ODM version 1.3.1)</param>
@@ -2860,13 +2845,14 @@ namespace Redcap
 
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Import Records
-        /// This method allows you to import a set of records for a project
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Import Records</para>
+        /// <para>This method allows you to import a set of records for a project</para>
+        /// 
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges in the project.
-        /// </remarks>
         /// <typeparam name="T"></typeparam>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="format">csv, json [default], xml, odm ('odm' refers to CDISC ODM XML format, specifically ODM version 1.3.1)</param>
@@ -2927,13 +2913,14 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Import Records
-        /// This method allows you to import a set of records for a project
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Import Records</para>
+        /// <para>This method allows you to import a set of records for a project</para>
+        /// 
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges in the project.
-        /// </remarks>
         /// <typeparam name="T"></typeparam>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">record</param>
@@ -2997,18 +2984,15 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Delete Records
-        /// This method allows you to delete one or more records from a project in a single API request.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Delete Records</para>
+        /// <para>This method allows you to delete one or more records from a project in a single API request.</para>
+        /// <para>Note: (This can only be used if the project is longitudinal with more than one arm.) NOTE: If the arm parameter is not provided, the specified records will be deleted from all arms in which they exist. Whereas, if arm is provided, they will only be deleted from the specified arm.</para>
+        /// <para>Permissions Required: To use this method, you must have 'Delete Record' user privileges in the project.</para>
         /// </summary>
-        /// <remarks>
-        /// 
-        /// To use this method, you must have 'Delete Record' user privileges in the project.
-        /// </remarks>
-        /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
-        /// <param name="records">an array of record names specifying specific records you wish to delete</param>
-        /// <param name="arm">the arm number of the arm in which the record(s) should be deleted. 
-        /// (This can only be used if the project is longitudinal with more than one arm.) NOTE: If the arm parameter is not provided, the specified records will be deleted from all arms in which they exist. Whereas, if arm is provided, they will only be deleted from the specified arm. </param>
+        /// <param name="token"></param>
+        /// <param name="records"></param>
+        /// <param name="arm"></param>
         /// <returns>the number of records deleted.</returns>
         public async Task<string> DeleteRecordsAsync(string token, string[] records, int? arm)
         {
@@ -3050,20 +3034,17 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Delete Records
-        /// This method allows you to delete one or more records from a project in a single API request.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Delete Records</para>
+        /// <para>This method allows you to delete one or more records from a project in a single API request.</para>
+        /// <para>Note: (This can only be used if the project is longitudinal with more than one arm.) NOTE: If the arm parameter is not provided, the specified records will be deleted from all arms in which they exist. Whereas, if arm is provided, they will only be deleted from the specified arm.</para>
+        /// <para>Permissions Required: To use this method, you must have 'Delete Record' user privileges in the project.</para>
         /// </summary>
-        /// <remarks>
-        /// 
-        /// To use this method, you must have 'Delete Record' user privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">record</param>
         /// <param name="action">delete</param>
         /// <param name="records">an array of record names specifying specific records you wish to delete</param>
         /// <param name="arm">the arm number of the arm in which the record(s) should be deleted. 
-        /// (This can only be used if the project is longitudinal with more than one arm.) NOTE: If the arm parameter is not provided, the specified records will be deleted from all arms in which they exist. Whereas, if arm is provided, they will only be deleted from the specified arm. </param>
         /// <returns>the number of records deleted.</returns>
         public async Task<string> DeleteRecordsAsync(string token, Content content, RedcapAction action, string[] records, int? arm)
         {
@@ -3107,12 +3088,16 @@ namespace Redcap
         #region Repeating Instruments and Events
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 8.2.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 8.2.0</para>
         /// 
-        /// Export Repeating Instruments and Events
+        /// <para>Export Repeating Instruments and Events</para>
         /// 
-        /// This method allows you to export a list of the repeated instruments and repeating events for a project. This includes their unique instrument name as seen in the second column of the Data Dictionary, as well as each repeating instrument's corresponding custom repeating instrument label. For longitudinal projects, the unique event name is also returned for each repeating instrument. Additionally, repeating events are returned as separate items, in which the instrument name will be blank/null to indicate that it is a repeating event (rather than a repeating instrument). 
+        /// <para>This method allows you to export a list of the repeated instruments and repeating events for a project. This includes their unique instrument name as seen in the second column of the Data Dictionary, as well as each repeating instrument's corresponding custom repeating instrument label. For longitudinal projects, the unique event name is also returned for each repeating instrument. Additionally, repeating events are returned as separate items, in which the instrument name will be blank/null to indicate that it is a repeating event (rather than a repeating instrument). </para>
+        /// 
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="format">csv, json [default], xml odm ('odm' refers to CDISC ODM XML format, specifically ODM version 1.3.1)</param>
@@ -3144,17 +3129,21 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 8.2.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 8.2.0</para>
         /// 
-        /// Export Repeating Instruments and Events
+        /// <para>Export Repeating Instruments and Events</para>
         /// 
-        /// This method allows you to export a list of the repeated instruments and repeating events for a project. This includes their unique instrument name as seen in the second column of the Data Dictionary, as well as each repeating instrument's corresponding custom repeating instrument label. For longitudinal projects, the unique event name is also returned for each repeating instrument. Additionally, repeating events are returned as separate items, in which the instrument name will be blank/null to indicate that it is a repeating event (rather than a repeating instrument). 
+        /// <para>This method allows you to export a list of the repeated instruments and repeating events for a project. This includes their unique instrument name as seen in the second column of the Data Dictionary, as well as each repeating instrument's corresponding custom repeating instrument label. For longitudinal projects, the unique event name is also returned for each repeating instrument. Additionally, repeating events are returned as separate items, in which the instrument name will be blank/null to indicate that it is a repeating event (rather than a repeating instrument). </para>
+        /// 
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">repeatingFormsEvents</param>
         /// <param name="format">csv, json [default], xml odm ('odm' refers to CDISC ODM XML format, specifically ODM version 1.3.1)</param>
-        /// <returns>Repeated instruments and events for the project in the format specified and will be ordered according to their order in the project.</returns>
+        /// <returns></returns>
         public async Task<string> ExportRepeatingInstrumentsAndEvents(string token, Content content, ReturnFormat format = ReturnFormat.json)
         {
             try
@@ -3181,11 +3170,14 @@ namespace Redcap
             }
         }
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 8.10.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 8.10.0</para>
         /// 
-        /// Import Repeating Instruments and Events
-        /// This method allows you to import a list of the repeated instruments and repeating events for a project. This includes their unique instrument name as seen in the second column of the Data Dictionary, as well as each repeating instrument's corresponding custom repeating instrument label. For longitudinal projects, the unique event name is also needed for each repeating instrument. Additionally, repeating events must be submitted as separate items, in which the instrument name will be blank/null to indicate that it is a repeating event (rather than a repeating instrument).
+        /// <para>Import Repeating Instruments and Events</para>
+        /// <para>This method allows you to import a list of the repeated instruments and repeating events for a project. This includes their unique instrument name as seen in the second column of the Data Dictionary, as well as each repeating instrument's corresponding custom repeating instrument label. For longitudinal projects, the unique event name is also needed for each repeating instrument. Additionally, repeating events must be submitted as separate items, in which the instrument name will be blank/null to indicate that it is a repeating event (rather than a repeating instrument).</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="data">Note: Super API Tokens can also be utilized for this method instead of a project-level API token. Users can only be granted a super token by a REDCap administrator (using the API Tokens page in the REDCap Control Center).</param>
@@ -3227,15 +3219,17 @@ namespace Redcap
         #endregion Repeating Instruments and Events
         #region Reports
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export Reports
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export Reports</para>
+        /// <para>
         /// This method allows you to export the data set of a report created on a project's 'Data Exports, Reports, and Stats' page.
         /// Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API report export will fail and return an error. And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.
         /// Also, please note the the 'Export Reports' method does *not* make use of the 'type' (flat/eav) parameter, which can be used in the 'Export Records' method.All data for the 'Export Reports' method is thus exported in flat format.If the 'type' parameter is supplied in the API request, it will be ignored.
+        /// </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="reportId">the report ID number provided next to the report name on the report list page</param>
         /// <param name="format">csv, json [default], xml odm ('odm' refers to CDISC ODM XML format, specifically ODM version 1.3.1)</param>
@@ -3289,15 +3283,17 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export Reports
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export Reports</para>
+        /// <para>
         /// This method allows you to export the data set of a report created on a project's 'Data Exports, Reports, and Stats' page.
         /// Note about export rights: Please be aware that Data Export user rights will be applied to this API request.For example, if you have 'No Access' data export rights in the project, then the API report export will fail and return an error. And if you have 'De-Identified' or 'Remove all tagged Identifier fields' data export rights, then some data fields *might* be removed and filtered out of the data set returned from the API. To make sure that no data is unnecessarily filtered out of your API request, you should have 'Full Data Set' export rights in the project.
         /// Also, please note the the 'Export Reports' method does *not* make use of the 'type' (flat/eav) parameter, which can be used in the 'Export Records' method.All data for the 'Export Reports' method is thus exported in flat format.If the 'type' parameter is supplied in the API request, it will be ignored.
+        /// </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">report</param>
         /// <param name="reportId">the report ID number provided next to the report name on the report list page</param>
@@ -3354,14 +3350,14 @@ namespace Redcap
         #region Redcap
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export REDCap Version
-        /// This method returns the current REDCap version number as plain text (e.g., 4.13.18, 5.12.2, 6.0.0).
-        /// </summary>
-        /// <remarks>
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export REDCap Version</para>
+        /// <para>This method returns the current REDCap version number as plain text (e.g., 4.13.18, 5.12.2, 6.0.0).</para>
         /// 
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// </summary>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content"></param>
         /// <param name="format">csv, json [default], xml</param>
@@ -3394,14 +3390,14 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export REDCap Version
-        /// This method returns the current REDCap version number as plain text (e.g., 4.13.18, 5.12.2, 6.0.0).
-        /// </summary>
-        /// <remarks>
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export REDCap Version</para>
+        /// <para>This method returns the current REDCap version number as plain text (e.g., 4.13.18, 5.12.2, 6.0.0).</para>
         /// 
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// </summary>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="format">csv, json [default], xml</param>
         /// <returns>The current REDCap version number (three numbers delimited with two periods) as plain text - e.g., 4.13.18, 5.12.2, 6.0.0</returns>
@@ -3434,15 +3430,18 @@ namespace Redcap
         #endregion Reports
         #region Surveys
         /// <summary>
+        /// <para>
         /// API Version 1.0.0+
+        /// </para>
+        /// <para>
         /// From Redcap Version 6.4.0
-        /// Export a Survey Link for a Participant
-        /// This method returns a unique survey link (i.e., a URL) in plain text format for a specified record and data collection instrument (and event, if longitudinal) in a project. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project, an error will be returned.
+        /// </para>
+        /// <para>Export a Survey Link for a Participant</para>
+        /// <para>This method returns a unique survey link (i.e., a URL) in plain text format for a specified record and data collection instrument (and event, if longitudinal) in a project. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project, an error will be returned.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// 
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="record">the record ID. The name of the record in the project.</param>
         /// <param name="instrument">the unique instrument name as seen in the second column of the Data Dictionary. This instrument must be enabled as a survey in the project.</param>
@@ -3482,15 +3481,18 @@ namespace Redcap
         }
 
         /// <summary>
+        /// <para>
         /// API Version 1.0.0+
+        /// </para>
+        /// <para>
         /// From Redcap Version 6.4.0
-        /// Export a Survey Link for a Participant
-        /// This method returns a unique survey link (i.e., a URL) in plain text format for a specified record and data collection instrument (and event, if longitudinal) in a project. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project, an error will be returned.
+        /// </para>
+        /// <para>Export a Survey Link for a Participant</para>
+        /// <para>This method returns a unique survey link (i.e., a URL) in plain text format for a specified record and data collection instrument (and event, if longitudinal) in a project. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project, an error will be returned.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// 
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">surveyLink</param>
         /// <param name="record">the record ID. The name of the record in the project.</param>
@@ -3531,14 +3533,14 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export a Survey Participant List
-        /// This method returns the list of all participants for a specific survey instrument (and for a specific event, if a longitudinal project). If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project, an error will be returned.
-        /// </summary>
-        /// <remarks>
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export a Survey Participant List</para>
+        /// <para>This method returns the list of all participants for a specific survey instrument (and for a specific event, if a longitudinal project). If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project, an error will be returned.</para>
         /// 
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// </summary>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="instrument">the unique instrument name as seen in the second column of the Data Dictionary. This instrument must be enabled as a survey in the project.</param>
         /// <param name="eventName">the unique event name (for longitudinal projects only).</param>
@@ -3576,14 +3578,14 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// Export a Survey Participant List
-        /// This method returns the list of all participants for a specific survey instrument (and for a specific event, if a longitudinal project). If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project, an error will be returned.
-        /// </summary>
-        /// <remarks>
+        /// <para>API Version 1.0.0+</para>
+        /// <para>Export a Survey Participant List</para>
+        /// <para>This method returns the list of all participants for a specific survey instrument (and for a specific event, if a longitudinal project). If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project, an error will be returned.</para>
         /// 
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// </summary>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">participantList</param>
         /// <param name="instrument">the unique instrument name as seen in the second column of the Data Dictionary. This instrument must be enabled as a survey in the project.</param>
@@ -3622,15 +3624,15 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.4.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.4.0 </para>
         /// 
-        /// Export a Survey Queue Link for a Participant
-        /// This method returns a unique Survey Queue link (i.e., a URL) in plain text format for the specified record in a project that is utilizing the Survey Queue feature. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the Survey Queue feature has not been enabled in the project, an error will be
+        /// <para>Export a Survey Queue Link for a Participant</para>
+        /// <para>This method returns a unique Survey Queue link (i.e., a URL) in plain text format for the specified record in a project that is utilizing the Survey Queue feature. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the Survey Queue feature has not been enabled in the project, an error will be</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="record">the record ID. The name of the record in the project.</param>
         /// <param name="onErrorFormat">csv, json, xml - specifies the format of error messages. If you do not pass in this flag, it will select the default format for you passed based on the 'format' flag you passed in or if no format flag was passed in, it will default to 'json'.</param>
@@ -3664,15 +3666,15 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.4.0 
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.4.0 </para>
         /// 
-        /// Export a Survey Queue Link for a Participant
-        /// This method returns a unique Survey Queue link (i.e., a URL) in plain text format for the specified record in a project that is utilizing the Survey Queue feature. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the Survey Queue feature has not been enabled in the project, an error will be
+        /// <para>Export a Survey Queue Link for a Participant</para>
+        /// <para>This method returns a unique Survey Queue link (i.e., a URL) in plain text format for the specified record in a project that is utilizing the Survey Queue feature. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the Survey Queue feature has not been enabled in the project, an error will be</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">surveyQueueLink</param>
         /// <param name="record">the record ID. The name of the record in the project.</param>
@@ -3707,14 +3709,14 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.4.0
-        /// Export a Survey Return Code for a Participant
-        /// This method returns a unique Return Code in plain text format for a specified record and data collection instrument (and event, if longitudinal) in a project. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project or does not have the 'Save and Return Later' feature enabled, an error will be returned.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.4.0</para>
+        /// <para>Export a Survey Return Code for a Participant</para>
+        /// <para>This method returns a unique Return Code in plain text format for a specified record and data collection instrument (and event, if longitudinal) in a project. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project or does not have the 'Save and Return Later' feature enabled, an error will be returned.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="record">the record ID. The name of the record in the project.</param>
         /// <param name="instrument">the unique instrument name as seen in the second column of the Data Dictionary. This instrument must be enabled as a survey in the project.</param>
@@ -3757,14 +3759,14 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 6.4.0
-        /// Export a Survey Return Code for a Participant
-        /// This method returns a unique Return Code in plain text format for a specified record and data collection instrument (and event, if longitudinal) in a project. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project or does not have the 'Save and Return Later' feature enabled, an error will be returned.
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 6.4.0</para>
+        /// <para>Export a Survey Return Code for a Participant</para>
+        /// <para>This method returns a unique Return Code in plain text format for a specified record and data collection instrument (and event, if longitudinal) in a project. If the user does not have 'Manage Survey Participants' privileges, they will not be able to use this method, and an error will be returned. If the specified data collection instrument has not been enabled as a survey in the project or does not have the 'Save and Return Later' feature enabled, an error will be returned.</para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">surveyReturnCode</param>
         /// <param name="record">the record ID. The name of the record in the project.</param>
@@ -3809,15 +3811,23 @@ namespace Redcap
         #endregion Surveys
         #region Users & User Privileges
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 4.7.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
         /// 
-        /// Export Users
-        /// This method allows you to export the list of users for a project, including their user privileges and also email address, first name, and last name. Note: If the user has been assigned to a user role, it will return the user with the role's defined privileges. 
-        /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
+        /// <para>Export Users</para>
+        /// <para>This method allows you to export the list of users for a project, including their user privileges and also email address, first name, and last name. Note: If the user has been assigned to a user role, it will return the user with the role's defined privileges. </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// <para>
+        /// Example:
+        /// 
+        /// KEY: Data Export: 0=No Access, 2=De-Identified, 1=Full Data Set
+        /// Form Rights: 0=No Access, 2=Read Only, 1=View records/responses and edit records(survey responses are read-only), 3=Edit survey responses
+        /// Other attribute values: 0=No Access, 1=Access.
+        /// 
+        /// </para>
+        /// </summary>        
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="format">csv, json [default], xml</param>
         /// <param name="onErrorFormat">csv, json, xml - specifies the format of error messages. If you do not pass in this flag, it will select the default format for you passed based on the 'format' flag you passed in or if no format flag was passed in, it will default to 'json'.</param>
@@ -3860,26 +3870,29 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 4.7.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
         /// 
-        /// Export Users
-        /// This method allows you to export the list of users for a project, including their user privileges and also email address, first name, and last name. Note: If the user has been assigned to a user role, it will return the user with the role's defined privileges. 
+        /// <para>Export Users</para>
+        /// <para>This method allows you to export the list of users for a project, including their user privileges and also email address, first name, and last name. Note: If the user has been assigned to a user role, it will return the user with the role's defined privileges. </para>
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// <para>
+        /// Example:
+        /// 
+        /// KEY: Data Export: 0=No Access, 2=De-Identified, 1=Full Data Set
+        /// Form Rights: 0=No Access, 2=Read Only, 1=View records/responses and edit records(survey responses are read-only), 3=Edit survey responses
+        /// Other attribute values: 0=No Access, 1=Access.
+        /// 
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Export privileges in the project.
-        /// </remarks>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">user</param>
         /// <param name="format">csv, json [default], xml</param>
         /// <param name="onErrorFormat">csv, json, xml - specifies the format of error messages. If you do not pass in this flag, it will select the default format for you passed based on the 'format' flag you passed in or if no format flag was passed in, it will default to 'json'.</param>
         /// <returns>The method will return all the attributes below with regard to user privileges in the format specified. Please note that the 'forms' attribute is the only attribute that contains sub-elements (one for each data collection instrument), in which each form will have its own Form Rights value (see the key below to learn what each numerical value represents). Most user privilege attributes are boolean (0=No Access, 1=Access). Attributes returned:
         /// username, email, firstname, lastname, expiration, data_access_group, design, user_rights, data_access_groups, data_export, reports, stats_and_charts, manage_survey_participants, calendar, data_import_tool, data_comparison_tool, logging, file_repository, data_quality_create, data_quality_execute, api_export, api_import, mobile_app, mobile_app_download_data, record_create, record_rename, record_delete, lock_records_customization, lock_records, lock_records_all_forms, forms</returns>
-        /// <example>
-        /// KEY: Data Export: 0=No Access, 2=De-Identified, 1=Full Data Set
-        /// Form Rights: 0=No Access, 2=Read Only, 1=View records/responses and edit records(survey responses are read-only), 3=Edit survey responses
-        /// Other attribute values: 0=No Access, 1=Access.
-        /// </example>
         public async Task<string> ExportUsersAsync(string token, Content content = Content.User, ReturnFormat format = ReturnFormat.json, OnErrorFormat onErrorFormat = OnErrorFormat.json)
         {
             try
@@ -3912,15 +3925,16 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 4.7.0 
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
         /// 
-        /// Import Users
-        /// This method allows you to import new users into a project while setting their user privileges, or update the privileges of existing users in the project. 
-        /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges *and* User Rights privileges in the project.
-        /// </remarks>
+        /// <para>Import Users</para>
+        /// <para>This method allows you to import new users into a project while setting their user privileges, or update the privileges of existing users in the project.</para> 
+        /// 
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
+        /// </summary>        
         /// <typeparam name="T"></typeparam>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="data">
@@ -3987,15 +4001,16 @@ namespace Redcap
         }
 
         /// <summary>
-        /// API Version 1.0.0+
-        /// From Redcap Version 4.7.0
+        /// <para>API Version 1.0.0+</para>
+        /// <para>From Redcap Version 4.7.0</para>
         /// 
-        /// Import Users
-        /// This method allows you to import new users into a project while setting their user privileges, or update the privileges of existing users in the project. 
+        /// <para>Import Users</para>
+        /// <para>This method allows you to import new users into a project while setting their user privileges, or update the privileges of existing users in the project.</para> 
+        /// 
+        /// <para>
+        /// Permissions Required: To use this method, you must have API Export privileges in the project.
+        /// </para>
         /// </summary>
-        /// <remarks>
-        /// To use this method, you must have API Import/Update privileges *and* User Rights privileges in the project.
-        /// </remarks>
         /// <typeparam name="T"></typeparam>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="content">user</param>
@@ -4063,1478 +4078,5 @@ namespace Redcap
         }
         #endregion Users & User Privileges
 
-        #endregion API Version 1.0.0+ End
-
-        #region deprecated methods < version 1.0.0
-        /// <summary>
-        /// Export Arms
-        /// </summary>
-        /// <param name="inputFormat">test</param>
-        /// <param name="returnFormat">test</param>
-        /// 
-        [Obsolete("Please use ExportArmsAsync with token param")]
-        public async Task<string> ExportArmsAsync(ReturnFormat inputFormat, OnErrorFormat returnFormat)
-        {
-            try
-            {
-                string _responseMessage;
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat);
-
-                var payload = new Dictionary<string, string>
-                    {
-                        { "token", _token },
-                        { "content", "arm" },
-                        { "format", _inputFormat },
-                        { "returnFormat", _returnFormat },
-                        { "arms", null}
-                    };
-                // Execute send request
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use DeleteArmsAsync with token param")]
-        public async Task<string> DeleteArmsAsync<T>(T data)
-        {
-            try
-            {
-                string _responseMessage;
-                var _serializedData = JsonConvert.SerializeObject(data);
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "arm" },
-                    { "action", "delete" },
-                    { "arms", _serializedData }
-                };
-                // Execute request
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportMetaDataAsync with token param")]
-        public async Task<string> GetMetaDataAsync(ReturnFormat? inputFormat, OnErrorFormat? returnFormat)
-        {
-            try
-            {
-                string _responseMessage;
-                // Handle optional parameters
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat);
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "metadata" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat }
-                };
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="delimiters"></param>
-        /// <param name="fields"></param>
-        /// <param name="forms"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportMetaDataAsync")]
-        public async Task<string> GetMetaDataAsync(ReturnFormat? inputFormat, OnErrorFormat? returnFormat, char[] delimiters, string fields = "", string forms = "")
-        {
-            try
-            {
-                string _responseMessage;
-                var _fields = "";
-                var _forms = "";
-                var _response = String.Empty;
-                if (delimiters.Length == 0)
-                {
-                    // Provide some default delimiters, mostly comma and spaces for redcap
-                    delimiters = new char[] { ',', ' ' };
-                }
-
-                var fieldsResult = await this.ExtractFieldsAsync(fields, delimiters);
-                var formsResult = await this.ExtractFormsAsync(forms, delimiters);
-
-                // Handle optional parameters
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat);
-
-                if (!String.IsNullOrEmpty(fields))
-                {
-                    // Convert Array List into string array
-                    string[] fieldsArray = fieldsResult.ToArray();
-                    // Convert string array into String
-                    _fields = await this.ConvertArraytoString(fieldsArray);
-                }
-                if (!String.IsNullOrEmpty(forms))
-                {
-                    string[] formsArray = formsResult.ToArray();
-                    // Convert string array into String
-                    _forms = await this.ConvertArraytoString(formsArray);
-                }
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "metadata" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat }
-                };
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="record"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="delimiters"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportRecordsAsync with token param")]
-        public async Task<string> GetRecordAsync(string record, ReturnFormat inputFormat, OnErrorFormat returnFormat, RedcapDataType redcapDataType, char[] delimiters)
-        {
-            try
-            {
-                string _responseMessage;
-                var _records = String.Empty;
-                if (delimiters.Length == 0)
-                {
-                    // Provide some default delimiters, mostly comma and spaces for redcap
-                    delimiters = new char[] { ',', ' ' };
-                }
-                var recordResults = await this.ExtractRecordsAsync(record, delimiters);
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat, redcapDataType);
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "record" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat },
-                    { "type", _redcapDataType }
-                };
-                if (recordResults.Count == 0)
-                {
-                    Log.Error($"Missing required informaion.");
-                    throw new InvalidOperationException($"Missing required informaion.");
-                }
-                else
-                {
-                    // Convert Array List into string array
-                    var inputRecords = recordResults.ToArray();
-                    // Convert string array into String
-                    _records = await this.ConvertArraytoString(inputRecords);
-                    payload.Add("records", _records);
-                }
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="record"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="delimiters"></param>
-        /// <param name="forms"></param>
-        /// <param name="events"></param>
-        /// <param name="fields"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportRecordsAsync with token param")]
-        public async Task<string> GetRecordAsync(string record, ReturnFormat inputFormat, RedcapDataType redcapDataType, OnErrorFormat returnFormat = OnErrorFormat.json, char[] delimiters = null, string forms = null, string events = null, string fields = null)
-        {
-            try
-            {
-                var _records = String.Empty;
-                if (delimiters == null)
-                {
-                    // Provide some default delimiters, mostly comma and spaces for redcap
-                    delimiters = new char[] { ',', ' ' };
-                }
-                var recordItems = await this.ExtractRecordsAsync(records: record, delimiters: delimiters);
-                var fieldItems = await this.ExtractFieldsAsync(fields: fields, delimiters: delimiters);
-                var formItems = await this.ExtractFormsAsync(forms: forms, delimiters: delimiters);
-                var eventItems = await this.ExtractEventsAsync(events: events, delimiters: delimiters);
-
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat, redcapDataType);
-
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "record" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat },
-                    { "type", _redcapDataType }
-                };
-                // Required
-                if (recordItems.Count == 0)
-                {
-                    Log.Error($"Missing required informaion.");
-                    throw new InvalidOperationException($"Missing required informaion.");
-                }
-                else
-                {
-                    // Convert Array List into string array
-                    var _inputRecords = recordItems.ToArray();
-                    payload.Add("records", await this.ConvertArraytoString(_inputRecords));
-                }
-                // Optional
-                if (fieldItems.Count > 0)
-                {
-                    var _fields = fieldItems.ToArray();
-                    payload.Add("fields", await this.ConvertArraytoString(_fields));
-                }
-
-                // Optional
-                if (formItems.Count > 0)
-                {
-                    var _forms = formItems.ToArray();
-                    payload.Add("forms", await this.ConvertArraytoString(_forms));
-                }
-
-                // Optional
-                if (eventItems.Count > 0)
-                {
-                    var _events = eventItems.ToArray();
-                    payload.Add("events", await this.ConvertArraytoString(_events));
-                }
-
-                return await this.SendPostRequestAsync(payload, _uri);
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportRecordsAsync with token param")]
-        public async Task<string> GetRecordsAsync(ReturnFormat inputFormat, OnErrorFormat returnFormat, RedcapDataType redcapDataType)
-        {
-            string _responseMessage;
-            try
-            {
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat, redcapDataType);
-                var response = String.Empty;
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "record" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat },
-                    { "type", _redcapDataType }
-                };
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportRedcapVersionAsync with token param")]
-        public async Task<string> GetRedcapVersionAsync(ReturnFormat inputFormat, RedcapDataType redcapDataType)
-        {
-            try
-            {
-                string _responseMessage;
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, OnErrorFormat.json, redcapDataType);
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "version" },
-                    { "format", _inputFormat },
-                    { "type", _redcapDataType }
-                };
-                // Execute send request
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="returnContent"></param>
-        /// <param name="overwriteBehavior"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="returnFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ImportRecordsAsync with token param")]
-        public async Task<string> SaveRecordsAsync(object data, ReturnContent returnContent, OverwriteBehavior overwriteBehavior, ReturnFormat? inputFormat, RedcapDataType? redcapDataType, OnErrorFormat? returnFormat)
-        {
-            try
-            {
-                string _responseMessage;
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat, redcapDataType);
-                if (data != null)
-                {
-                    List<object> dataList = new List<object>
-                    {
-                        data
-                    };
-                    var _serializedData = JsonConvert.SerializeObject(dataList);
-                    var _overWriteBehavior = await this.ExtractBehaviorAsync(overwriteBehavior);
-                    var payload = new Dictionary<string, string>
-                    {
-                        { "token", _token },
-                        { "content", "record" },
-                        { "format", _inputFormat },
-                        { "type", _redcapDataType },
-                        { "overwriteBehavior", _overWriteBehavior },
-                        { "dateFormat", "MDY" },
-                        { "returnFormat", _inputFormat },
-                        { "returnContent", "count" },
-                        { "data", _serializedData }
-                    };
-
-                    // Execute send request
-                    _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                    return _responseMessage;
-                }
-                return null;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"Could not save records into redcap.");
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="returnContent"></param>
-        /// <param name="overwriteBehavior"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="dateFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ImportRecordsAsync with token param")]
-        public async Task<string> SaveRecordsAsync(object data, ReturnContent returnContent, OverwriteBehavior overwriteBehavior, ReturnFormat? inputFormat, RedcapDataType? redcapDataType, OnErrorFormat? returnFormat, string dateFormat = "MDY")
-        {
-            try
-            {
-                string _responseMessage;
-                string _dateFormat = dateFormat;
-                // Handle optional parameters
-                if (String.IsNullOrEmpty(_dateFormat))
-                {
-                    _dateFormat = "MDY";
-                }
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat, redcapDataType);
-                var _returnContent = await this.HandleReturnContent(returnContent);
-                var _overWriteBehavior = await this.ExtractBehaviorAsync(overwriteBehavior);
-
-                // Extract properties from object provided
-                if (data != null)
-                {
-                    List<object> list = new List<object>
-                    {
-                        data
-                    };
-                    var formattedData = JsonConvert.SerializeObject(list);
-                    var payload = new Dictionary<string, string>
-                    {
-                        { "token", _token },
-                        { "content", "record" },
-                        { "format", _inputFormat },
-                        { "type", _redcapDataType },
-                        { "overwriteBehavior", _overWriteBehavior },
-                        { "dateFormat", _dateFormat },
-                        { "returnFormat", _inputFormat },
-                        { "returnContent", _returnContent },
-                        { "data", formattedData }
-                    };
-
-                    // Execute send request
-                    _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                    return _responseMessage;
-                }
-                return string.Empty;
-
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return await Task.FromResult(string.Empty);
-            }
-        }
-        /// <summary>
-        /// Saves record to redcap
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="returnContent"></param>
-        /// <param name="overwriteBehavior"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="dateFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ImportRecordsAsync with token param")]
-        public async Task<string> SaveRecordsAsync(List<string> data, ReturnContent returnContent, OverwriteBehavior overwriteBehavior, ReturnFormat? inputFormat, RedcapDataType? redcapDataType, OnErrorFormat? returnFormat, string dateFormat = "MDY")
-        {
-            try
-            {
-                string _responseMessage;
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat, redcapDataType);
-                var _returnContent = await this.HandleReturnContent(returnContent);
-                var _overWriteBehavior = await this.ExtractBehaviorAsync(overwriteBehavior);
-
-                var _response = String.Empty;
-                var _dateFormat = dateFormat;
-                // Handle optional parameters
-                if (string.IsNullOrEmpty((string)_dateFormat))
-                {
-                    _dateFormat = "MDY";
-                }
-                // Extract properties from object provided
-                if (data != null)
-                {
-                    var _serializedData = JsonConvert.SerializeObject(data);
-                    var payload = new Dictionary<string, string>
-                    {
-                        { "token", _token },
-                        { "content", "record" },
-                        { "format", _inputFormat },
-                        { "type", _redcapDataType },
-                        { "overwriteBehavior", _overWriteBehavior },
-                        { "dateFormat", _dateFormat },
-                        { "returnFormat", _returnFormat },
-                        { "returnContent", _returnContent },
-                        { "data", _serializedData }
-                    };
-
-                    // Execute send request
-                    _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                    return _responseMessage;
-                }
-                return string.Empty;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return await Task.FromResult(string.Empty);
-            }
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="returnContent"></param>
-        /// <param name="overwriteBehavior"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="dateFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ImportRecordsAsync with token param")]
-        public async Task<string> ImportRecordsAsync(object data, ReturnContent returnContent, OverwriteBehavior overwriteBehavior, ReturnFormat? inputFormat, RedcapDataType? redcapDataType, OnErrorFormat? returnFormat, string dateFormat = "MDY")
-        {
-            try
-            {
-                string _responseMessage;
-                string _dateFormat = dateFormat;
-                // Handle optional parameters
-                if (String.IsNullOrEmpty(_dateFormat))
-                {
-                    _dateFormat = "MDY";
-                }
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat, redcapDataType);
-                var _returnContent = await this.HandleReturnContent(returnContent);
-                var _overWriteBehavior = await this.ExtractBehaviorAsync(overwriteBehavior);
-
-                // Extract properties from object provided
-                if (data != null)
-                {
-                    List<object> list = new List<object>
-                    {
-                        data
-                    };
-                    var formattedData = JsonConvert.SerializeObject(list);
-                    var payload = new Dictionary<string, string>
-                    {
-                        { "token", _token },
-                        { "content", "record" },
-                        { "format", _inputFormat },
-                        { "type", _redcapDataType },
-                        { "overwriteBehavior", _overWriteBehavior },
-                        { "dateFormat", _dateFormat },
-                        { "returnFormat", _inputFormat },
-                        { "returnContent", _returnContent },
-                        { "data", formattedData }
-                    };
-
-                    // Execute send request
-                    _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                    return _responseMessage;
-                }
-                return string.Empty;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return await Task.FromResult(string.Empty);
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="returnContent"></param>
-        /// <param name="overwriteBehavior"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="apiToken"></param>
-        /// <param name="dateFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ImportRecordsAsync with token param")]
-        public async Task<string> ImportRecordsAsync(object data, ReturnContent returnContent, OverwriteBehavior overwriteBehavior, ReturnFormat? inputFormat, RedcapDataType? redcapDataType, OnErrorFormat? returnFormat, string apiToken, string dateFormat = "MDY")
-        {
-            try
-            {
-                string _apiToken = apiToken;
-                string _responseMessage;
-                string _dateFormat = dateFormat;
-                // Handle optional parameters
-                if (String.IsNullOrEmpty(_dateFormat))
-                {
-                    _dateFormat = "MDY";
-                }
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat, redcapDataType);
-                var _returnContent = await this.HandleReturnContent(returnContent);
-                var _overWriteBehavior = await this.ExtractBehaviorAsync(overwriteBehavior);
-
-                // Extract properties from object provided
-                if (data != null)
-                {
-                    //List<object> list = new List<object>
-                    //{
-                    //    data
-                    //};
-                    var formattedData = JsonConvert.SerializeObject(data);
-                    var payload = new Dictionary<string, string>
-                    {
-                        { "token", _apiToken },
-                        { "content", "record" },
-                        { "format", _inputFormat },
-                        { "type", _redcapDataType },
-                        { "overwriteBehavior", _overWriteBehavior },
-                        { "dateFormat", _dateFormat },
-                        { "returnFormat", _inputFormat },
-                        { "returnContent", _returnContent },
-                        { "data", formattedData }
-                    };
-
-                    // Execute send request
-                    _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                    return _responseMessage;
-                }
-                return string.Empty;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return await Task.FromResult(string.Empty);
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportMetaDataAsync with token param")]
-
-        public async Task<string> ExportMetaDataAsync(ReturnFormat? inputFormat, OnErrorFormat? returnFormat)
-        {
-            try
-            {
-                string _responseMessage;
-                // Handle optional parameters
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat);
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "metadata" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat }
-                };
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="delimiters"></param>
-        /// <param name="fields"></param>
-        /// <param name="forms"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportMetaDataAsync with token param")]
-        public async Task<string> ExportMetaDataAsync(ReturnFormat? inputFormat, OnErrorFormat? returnFormat, char[] delimiters, string fields = "", string forms = "")
-        {
-            try
-            {
-                string _responseMessage;
-                var _fields = "";
-                var _forms = "";
-                if (delimiters.Length == 0)
-                {
-                    // Provide some default delimiters, mostly comma and spaces for redcap
-                    delimiters = new char[] { ',', ' ' };
-                }
-
-                var fieldsResult = await this.ExtractFieldsAsync(fields, delimiters);
-                var formsResult = await this.ExtractFormsAsync(forms, delimiters);
-
-                // Handle optional parameters
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat);
-
-                if (!String.IsNullOrEmpty(fields))
-                {
-                    // Convert Array List into string array
-                    string[] fieldsArray = fieldsResult.ToArray();
-                    // Convert string array into String
-                    _fields = await this.ConvertArraytoString(fieldsArray);
-                }
-                if (!String.IsNullOrEmpty(forms))
-                {
-                    string[] formsArray = formsResult.ToArray();
-                    // Convert string array into String
-                    _forms = await this.ConvertArraytoString(formsArray);
-                }
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "metadata" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat }
-                };
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="arms"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportEventsAsync with token param")]
-        public async Task<string> ExportEventsAsync(ReturnFormat inputFormat, OnErrorFormat returnFormat = OnErrorFormat.json, int[] arms = null)
-        {
-            try
-            {
-                string _responseMessage;
-                var _arms = "";
-                // Handle optional parameters
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat);
-                if (arms.Length > 0)
-                {
-                    // Convert string array into String
-                    _arms = await this.ConvertIntArraytoString(arms);
-                }
-                var payload = new Dictionary<string, string>
-                {
-                    {"arms", _arms },
-                    { "token", _token },
-                    { "content", "event" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat }
-                };
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// Alias /test/compatibility
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <returns>string</returns>
-        public delegate Task<string> GetRedcapVersion(ReturnFormat inputFormat, RedcapDataType redcapDataType);
-        /// <summary>
-        /// Alias /test/compatibility
-        /// </summary>
-        /// <param name="record"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="delimiters"></param>
-        /// <param name="forms"></param>
-        /// <param name="events"></param>
-        /// <param name="fields"></param>
-        /// <returns></returns>
-        public delegate Task<string> ExportRecord(string record, ReturnFormat inputFormat, RedcapDataType redcapDataType, OnErrorFormat returnFormat = OnErrorFormat.json, char[] delimiters = null, string forms = null, string events = null, string fields = null);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="record"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="delimiters"></param>
-        /// <param name="forms"></param>
-        /// <param name="events"></param>
-        /// <param name="fields"></param>
-        /// <returns></returns>
-        public delegate Task<string> ExportRecords(string record, ReturnFormat inputFormat, RedcapDataType redcapDataType, OnErrorFormat returnFormat = OnErrorFormat.json, char[] delimiters = null, string forms = null, string events = null, string fields = null);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
-        /// <param name="overRide"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ImportArmsAsync with token param")]
-        public async Task<string> ImportArmsAsync<T>(List<T> data, Override overRide, ReturnFormat inputFormat, OnErrorFormat returnFormat)
-        {
-            try
-            {
-                string _responseMessage;
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat);
-                var _override = overRide.ToString();
-                var _serializedData = JsonConvert.SerializeObject(data);
-                var payload = new Dictionary<string, string>
-                    {
-                        { "token", _token },
-                        { "content", "arm" },
-                        { "action", "import" },
-                        { "format", _inputFormat },
-                        { "type", _redcapDataType },
-                        { "override", _override },
-                        { "returnFormat", _returnFormat },
-                        { "data", _serializedData }
-                    };
-                // Execute request
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="record"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="delimiters"></param>
-        /// <param name="forms"></param>
-        /// <param name="events"></param>
-        /// <param name="fields"></param>
-        /// <returns></returns>
-        [Obsolete("ExportRecordAsync is deprecated, please use ExportRecordsAsync version 1.0+", true)]
-        public async Task<string> ExportRecordAsync(string record, ReturnFormat inputFormat, RedcapDataType redcapDataType, OnErrorFormat returnFormat = OnErrorFormat.json, char[] delimiters = null, string forms = null, string events = null, string fields = null)
-        {
-            try
-            {
-                if (delimiters == null)
-                {
-                    // Provide some default delimiters, mostly comma and spaces for redcap
-                    delimiters = new char[] { ',', ' ' };
-                }
-                var recordItems = await this.ExtractRecordsAsync(records: record, delimiters: delimiters);
-                var fieldItems = await this.ExtractFieldsAsync(fields: fields, delimiters: delimiters);
-                var formItems = await this.ExtractFormsAsync(forms: forms, delimiters: delimiters);
-                var eventItems = await this.ExtractEventsAsync(events: events, delimiters: delimiters);
-
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat, redcapDataType);
-
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "record" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat },
-                    { "type", _redcapDataType }
-                };
-                // Required
-                if (recordItems.Count == 0)
-                {
-                    Log.Error($"Missing required informaion.");
-                    throw new InvalidOperationException($"Missing required informaion.");
-                }
-                else
-                {
-                    // Convert Array List into string array
-                    var _inputRecords = recordItems.ToArray();
-                    payload.Add("records", await this.ConvertArraytoString(_inputRecords));
-                }
-                // Optional
-                if (fieldItems.Count > 0)
-                {
-                    var _fields = fieldItems.ToArray();
-                    payload.Add("fields", await this.ConvertArraytoString(_fields));
-                }
-
-                // Optional
-                if (formItems.Count > 0)
-                {
-                    var _forms = formItems.ToArray();
-                    payload.Add("forms", await this.ConvertArraytoString(_forms));
-                }
-
-                // Optional
-                if (eventItems.Count > 0)
-                {
-                    var _events = eventItems.ToArray();
-                    payload.Add("events", await this.ConvertArraytoString(_events));
-                }
-
-                return await this.SendPostRequestAsync(payload, _uri);
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="records"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="delimiters"></param>
-        /// <param name="forms"></param>
-        /// <param name="events"></param>
-        /// <param name="fields"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("ExportRecordAsync is deprecated, please use ExportRecordsAsync version 1.0+", true)]
-        public async Task<string> ExportRecordsAsync(string records, ReturnFormat inputFormat, RedcapDataType redcapDataType, OnErrorFormat returnFormat = OnErrorFormat.json, char[] delimiters = null, string forms = null, string events = null, string fields = null)
-        {
-            try
-            {
-                string _responseMessage;
-                var _records = String.Empty;
-                if (delimiters == null)
-                {
-                    // Provide some default delimiters, mostly comma and spaces for redcap
-                    delimiters = new char[] { ',', ' ' };
-                }
-                var recordItems = await this.ExtractRecordsAsync(records: records, delimiters: delimiters);
-                var fieldItems = await this.ExtractFieldsAsync(fields: fields, delimiters: delimiters);
-                var formItems = await this.ExtractFormsAsync(forms: forms, delimiters: delimiters);
-                var eventItems = await this.ExtractEventsAsync(events: events, delimiters: delimiters);
-
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat, redcapDataType);
-
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "record" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat },
-                    { "type", _redcapDataType }
-                };
-                // Required
-                if (recordItems.Count == 0)
-                {
-                    Log.Error($"Missing required informaion.");
-                    throw new InvalidOperationException($"Missing required informaion.");
-                }
-                else
-                {
-                    // Convert Array List into string array
-                    var _inputRecords = recordItems.ToArray();
-                    payload.Add("records", await this.ConvertArraytoString(_inputRecords));
-                }
-                // Optional
-                if (fieldItems.Count > 0)
-                {
-                    var _fields = fieldItems.ToArray();
-                    payload.Add("fields", await this.ConvertArraytoString(_fields));
-                }
-
-                // Optional
-                if (formItems.Count > 0)
-                {
-                    var _forms = formItems.ToArray();
-                    payload.Add("forms", await this.ConvertArraytoString(_forms));
-                }
-
-                // Optional
-                if (eventItems.Count > 0)
-                {
-                    var _events = eventItems.ToArray();
-                    payload.Add("events", await this.ConvertArraytoString(_events));
-                }
-
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="delimiters"></param>
-        /// <param name="forms"></param>
-        /// <param name="events"></param>
-        /// <param name="fields"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("ExportRecordAsync is deprecated, please use ExportRecordsAsync version 1.0+", true)]
-        public async Task<string> ExportRecordsAsync(ReturnFormat inputFormat, RedcapDataType redcapDataType, OnErrorFormat returnFormat = OnErrorFormat.json, char[] delimiters = null, string forms = null, string events = null, string fields = null)
-        {
-            try
-            {
-                string _responseMessage;
-                var _records = String.Empty;
-                if (delimiters == null)
-                {
-                    // Provide some default delimiters, mostly comma and spaces for redcap
-                    delimiters = new char[] { ',', ' ' };
-                }
-                var fieldItems = await this.ExtractFieldsAsync(fields: fields, delimiters: delimiters);
-                var formItems = await this.ExtractFormsAsync(forms: forms, delimiters: delimiters);
-                var eventItems = await this.ExtractEventsAsync(events: events, delimiters: delimiters);
-
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat, redcapDataType);
-
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "record" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat },
-                    { "type", _redcapDataType }
-                };
-                // Optional
-                if (fieldItems.Count > 0)
-                {
-                    var _fields = fieldItems.ToArray();
-                    payload.Add("fields", await this.ConvertArraytoString(_fields));
-                }
-
-                // Optional
-                if (formItems.Count > 0)
-                {
-                    var _forms = formItems.ToArray();
-                    payload.Add("forms", await this.ConvertArraytoString(_forms));
-                }
-
-                // Optional
-                if (eventItems.Count > 0)
-                {
-                    var _events = eventItems.ToArray();
-                    payload.Add("events", await this.ConvertArraytoString(_events));
-                }
-
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportRedcapVersionAsync with token param ")]
-        public async Task<string> ExportRedcapVersionAsync(ReturnFormat inputFormat, RedcapDataType redcapDataType)
-        {
-            try
-            {
-                string _responseMessage;
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, OnErrorFormat.json, redcapDataType);
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "version" },
-                    { "format", _inputFormat },
-                    { "type", _redcapDataType }
-                };
-                // Execute send request
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-
-                return await Task.FromResult(_responseMessage);
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportUsersAsync with token param ")]
-        public async Task<string> ExportUsersAsync(ReturnFormat inputFormat, OnErrorFormat returnFormat = OnErrorFormat.json)
-        {
-            try
-            {
-                string _responseMessage;
-                var _inputFormat = inputFormat.ToString();
-                var _returnFormat = returnFormat.ToString();
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "user" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat }
-                };
-
-                // Execute send request
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <param name="redcapDataType"></param>
-        /// <param name="delimiters"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportRecordsAsync with token param ")]
-        public async Task<string> GetRecordsAsync(ReturnFormat inputFormat, OnErrorFormat returnFormat, RedcapDataType redcapDataType, char[] delimiters)
-        {
-            try
-            {
-                string _responseMessage;
-                var _records = String.Empty;
-                if (delimiters == null)
-                {
-                    // Provide some default delimiters, mostly comma and spaces for redcap
-                    delimiters = new char[] { ',', ' ' };
-                }
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat);
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "record" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat },
-                    { "type", _redcapDataType }
-                };
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
-        /// <param name="overRide"></param>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ImportEventsAsync with token param ")]
-        public async Task<string> ImportEventsAsync<T>(List<T> data, Override overRide, ReturnFormat inputFormat, OnErrorFormat returnFormat = OnErrorFormat.json)
-        {
-            try
-            {
-                string _responseMessage;
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat);
-                var _override = overRide.ToString();
-                var _serializedData = JsonConvert.SerializeObject(data);
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "event" },
-                    { "action", "import" },
-                    { "format", _inputFormat },
-                    { "type", _redcapDataType },
-                    { "override", _override },
-                    { "returnFormat", _returnFormat },
-                    { "data", _serializedData }
-                };
-                // Execute request
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="record"></param>
-        /// <param name="field"></param>
-        /// <param name="eventName"></param>
-        /// <param name="repeatInstance"></param>
-        /// <param name="returnFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportFileAsync with token param ")]
-        public async Task<string> ExportFileAsync(string record, string field, string eventName, string repeatInstance, OnErrorFormat returnFormat = OnErrorFormat.json)
-        {
-            try
-            {
-                string _responseMessage;
-                var _returnFormat = returnFormat.ToString();
-                var _eventName = eventName;
-                var _repeatInstance = repeatInstance;
-                var _record = record;
-                var _field = field;
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "file" },
-                    { "action", "export" },
-                    { "record", _record },
-                    { "field", _field },
-                    { "event", _eventName },
-                    { "returnFormat", _returnFormat }
-                };
-                if (!string.IsNullOrEmpty(_repeatInstance))
-                {
-                    payload.Add("repeat_instance", _repeatInstance);
-                }
-                // Execute request
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error(Ex.Message);
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="record"></param>
-        /// <param name="field"></param>
-        /// <param name="eventName"></param>
-        /// <param name="repeatInstance"></param>
-        /// <param name="filePath"></param>
-        /// <param name="returnFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("ExportFileAsync is deprecated, please use ExportFileAsync version 1.0+", true)]
-        public async Task<string> ExportFileAsync(string record, string field, string eventName, string repeatInstance, string filePath = null, OnErrorFormat returnFormat = OnErrorFormat.json)
-        {
-            try
-            {
-                string _responseMessage;
-                var _filePath = filePath;
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    if (!Directory.Exists(_filePath))
-                    {
-                        Log.Information($"The directory does not exist!");
-                        Directory.CreateDirectory(_filePath);
-                    }
-                }
-                var _returnFormat = returnFormat.ToString();
-                var _eventName = eventName;
-                var _repeatInstance = repeatInstance;
-                var _record = record;
-                var _field = field;
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "file" },
-                    { "action", "export" },
-                    { "record", _record },
-                    { "field", _field },
-                    { "event", _eventName },
-                    { "returnFormat", _returnFormat },
-                    { "filePath", $@"{_filePath}" }
-                };
-                if (!string.IsNullOrEmpty(_repeatInstance))
-                {
-                    payload.Add("repeat_instance", _repeatInstance);
-                }
-                // Execute request
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error(Ex.Message);
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="record"></param>
-        /// <param name="field"></param>
-        /// <param name="eventName"></param>
-        /// <param name="repeatInstance"></param>
-        /// <param name="fileName"></param>
-        /// <param name="filePath"></param>
-        /// <param name="returnFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("ImportFileAsync is deprecated, please use ImportFileAsync version 1.0+", true)]
-        public async Task<string> ImportFileAsync(string record, string field, string eventName, string repeatInstance, string fileName, string filePath, OnErrorFormat returnFormat = OnErrorFormat.json)
-        {
-
-            try
-            {
-                string _responseMessage;
-                var _fileName = fileName;
-                var _filePath = filePath;
-                var _binaryFile = Path.Combine(_filePath, _fileName);
-                ByteArrayContent _fileContent;
-                var _returnFormat = returnFormat.ToString();
-                var _eventName = eventName;
-                var _repeatInstance = repeatInstance;
-                var _record = record;
-                var _field = field;
-                var payload = new MultipartFormDataContent()
-                {
-                        {new StringContent(_token), "token" },
-                        {new StringContent("file") ,"content" },
-                        {new StringContent("import"), "action" },
-                        {new StringContent(_record), "record" },
-                        {new StringContent(_field), "field" },
-                        {new StringContent(_eventName),  "event" },
-                        {new StringContent(_returnFormat), "returnFormat" }
-                };
-                if (!string.IsNullOrEmpty(_repeatInstance))
-                {
-                    // add repeat instrument params if available
-                    payload.Add(new StringContent(_repeatInstance), "repeat_instance");
-                }
-                if (string.IsNullOrEmpty(_fileName) || string.IsNullOrEmpty(_filePath))
-                {
-
-                    throw new InvalidOperationException($"file can not be empty or null");
-                }
-                else
-                {
-                    // add the binary file in specific content type
-                    _fileContent = new ByteArrayContent(File.ReadAllBytes(_binaryFile));
-                    _fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                    payload.Add(_fileContent, "file", _fileName);
-                }
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error(Ex.Message);
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="record"></param>
-        /// <param name="field"></param>
-        /// <param name="eventName"></param>
-        /// <param name="repeatInstance"></param>
-        /// <param name="returnFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use DeleteFileAsync with token param ")]
-        public async Task<string> DeleteFileAsync(string record, string field, string eventName, string repeatInstance, OnErrorFormat returnFormat = OnErrorFormat.json)
-        {
-            try
-            {
-                string _responseMessage;
-                var _returnFormat = returnFormat.ToString();
-                var _eventName = eventName;
-                var _repeatInstance = repeatInstance;
-                var _record = record;
-                var _field = field;
-                var payload = new MultipartFormDataContent()
-                {
-                        {new StringContent(_token), "token" },
-                        {new StringContent("file") ,"content" },
-                        {new StringContent("delete"), "action" },
-                        {new StringContent(_record), "record" },
-                        {new StringContent(_field), "field" },
-                        {new StringContent(_eventName),  "event" },
-                        {new StringContent(_returnFormat), "returnFormat" }
-                };
-                if (!string.IsNullOrEmpty(_repeatInstance))
-                {
-                    // add repeat instrument params if available
-                    payload.Add(new StringContent(_repeatInstance), "repeat_instance");
-                }
-                _responseMessage = await this.SendPostRequestAsync(payload, _uri);
-                return _responseMessage;
-            }
-            catch (Exception Ex)
-            {
-                Log.Error(Ex.Message);
-                return string.Empty;
-            }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="inputFormat"></param>
-        /// <param name="returnFormat"></param>
-        /// <returns></returns>
-        /// 
-        [Obsolete("Please use ExportEventsAsync with token param ")]
-        public async Task<string> ExportEventsAsync(ReturnFormat inputFormat, OnErrorFormat returnFormat = OnErrorFormat.json)
-        {
-            try
-            {
-                // Handle optional parameters
-                var (_inputFormat, _returnFormat, _redcapDataType) = await this.HandleFormat(inputFormat, returnFormat);
-                var payload = new Dictionary<string, string>
-                {
-                    { "token", _token },
-                    { "content", "event" },
-                    { "format", _inputFormat },
-                    { "returnFormat", _returnFormat }
-                };
-                return await this.SendPostRequestAsync(payload, _uri);
-            }
-            catch (Exception Ex)
-            {
-                Log.Error($"{Ex.Message}");
-                return string.Empty;
-            }
-        }
-        #endregion deprecated
     }
 }
