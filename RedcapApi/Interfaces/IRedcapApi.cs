@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Redcap.Models;
 
-namespace Redcap
+namespace Redcap.Interfaces
 {
     /// <summary>
     /// The REDCap API is an interface that allows external applications 
@@ -103,10 +103,10 @@ namespace Redcap
         /// <para>NOTE: This only works for longitudinal projects.</para> 
         /// <para>Permissions Required: To use this method, you must have API Import/Update privileges *and* Project Design/Setup privileges in the project.</para>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
+        /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
+        /// <param name="arms">an array of arm numbers that you wish to delete</param>
         /// <returns>Number of Events deleted</returns>
-        Task<string> DeleteArmsAsync<T>(T data);
+        Task<string> DeleteArmsAsync(string token, string[] arms);
 
         /// <summary>
         /// <para>API Version 1.0.0+</para>
