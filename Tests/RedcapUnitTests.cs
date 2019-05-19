@@ -34,13 +34,20 @@ namespace Tests
         private const string _token = "A8E6949EF4380F1111C66D5374E1AE6C";
 
         #region Helpers
-        private string GetToken()
+        private static string GetToken()
         {
             return _token;
         }
         private RedcapInstrument GetRedcapInstrument()
         {
             return new RedcapInstrument { FirstName = "Red", LastName = "Cap", RecordId = "1" };
+        }
+        private List<RedcapArm> CreateArms()
+        {
+            return new List<RedcapArm> {
+                new RedcapArm {ArmNumber = "1", Name = "arm1" },
+                new RedcapArm{ArmNumber = "2", Name ="arm2" }
+            };
         }
         #endregion
         #region ExportArmsAsync
@@ -80,14 +87,12 @@ namespace Tests
             mock.Verify(x => x.ExportArmsAsync(_token, ReturnFormat.json, null, OnErrorFormat.json), Times.AtLeastOnce());
         }
         #endregion ExportArmsAsync
+
         #region ImportArmsAsync
         [Fact]
         public async void ImportArmsAsync_ShouldReturn_Num_Arms()
         {
-            var arms = new List<RedcapArm> {
-                new RedcapArm {ArmNumber = "1", Name = "arm1" },
-                new RedcapArm{ArmNumber = "2", Name ="arm2" }
-            };
+            var arms = CreateArms();
             var armNumbers = arms.Select(x => x.ArmNumber).ToList();
             // Mocking API Call and results
             var mock = new Mock<IRedcapApi>();
@@ -103,10 +108,7 @@ namespace Tests
         [Fact]
         public async void ImportArmsAsyncWithContent_ShouldReturn_Num_Arms()
         {
-            var arms = new List<RedcapArm> {
-                new RedcapArm {ArmNumber = "1", Name = "arm1" },
-                new RedcapArm{ArmNumber = "2", Name ="arm2" }
-            };
+            var arms = CreateArms();
             var armNumbers = arms.Select(x => x.ArmNumber).ToList();
             // Mocking API Call and results
             var mock = new Mock<IRedcapApi>();
@@ -120,6 +122,50 @@ namespace Tests
             Assert.Contains("2", result.ToString());
         }
         #endregion
+
+        #region DeleteArmsAsync
+        [Fact]
+        public async void DeleteArmsAsync_ShouldReturn_Num_Arms()
+        {
+            var arms = CreateArms();
+            var armNumbers = arms.Select(x => x.ArmNumber).ToArray();
+            // Mocking API Call and results
+            var mock = new Mock<IRedcapApi>();
+            mock.Setup(x => x.DeleteArmsAsync(GetToken(), armNumbers)).Returns(Task.FromResult(JsonConvert.SerializeObject(arms.Count)));
+            var api = mock.Object;
+
+            // Act
+            var armResult = await api.DeleteArmsAsync(GetToken(), armNumbers);
+            var result = JsonConvert.DeserializeObject(armResult);
+
+            // Assert
+            Assert.Contains("2", result.ToString());
+        }
+        [Fact]
+        public async void DeleteArmsAsyncWithContent_ShouldReturn_Num_Arms()
+        {
+            var arms = CreateArms();
+            var armNumbers = arms.Select(x => x.ArmNumber).ToArray();
+            // Mocking API Call and results
+            var mock = new Mock<IRedcapApi>();
+            mock.Setup(x => x.DeleteArmsAsync(GetToken(), Content.Arm, RedcapAction.Delete, armNumbers)).Returns(Task.FromResult(JsonConvert.SerializeObject(arms.Count)));
+            var api = mock.Object;
+
+            // Act
+            var armResult = await api.DeleteArmsAsync(GetToken(), Content.Arm, RedcapAction.Delete, armNumbers);
+            var result = JsonConvert.DeserializeObject(armResult);
+
+            // Assert
+            Assert.Contains("2", result.ToString());
+        }
+        #endregion
+        #region ExportEventsAsync
+        [Fact]
+        public async void ExportEventsAsync_ShouldReturn_Num_Events()
+        {
+
+        }
+        #endregion
         #region ExportRedcapVersionAsync
         [Fact]
         public async void ExportRedcapVersionAsync_ShouldReturn_RedcapVersion()
@@ -128,11 +174,11 @@ namespace Tests
             const string version = "8.10.15";
             // Mocking API Call and results
             var mock = new Mock<IRedcapApi>();
-            mock.Setup(x => x.ExportRedcapVersionAsync(_token, ReturnFormat.json)).Returns(Task.FromResult(version));
+            mock.Setup(x => x.ExportRedcapVersionAsync(GetToken(), ReturnFormat.json)).Returns(Task.FromResult(version));
             var api = mock.Object;
 
             // Act
-            var result = await api.ExportRedcapVersionAsync(_token, ReturnFormat.json);
+            var result = await api.ExportRedcapVersionAsync(GetToken(), ReturnFormat.json);
 
             // Assert
             Assert.Contains("8.10.15", result);
@@ -147,11 +193,11 @@ namespace Tests
             var version = input;
             // Mocking API Call and results
             var mock = new Mock<IRedcapApi>();
-            mock.Setup(x => x.ExportRedcapVersionAsync(_token, ReturnFormat.json)).Returns(Task.FromResult(version));
+            mock.Setup(x => x.ExportRedcapVersionAsync(GetToken(), ReturnFormat.json)).Returns(Task.FromResult(version));
             var api = mock.Object;
 
             // Act
-            var result = await api.ExportRedcapVersionAsync(_token, ReturnFormat.json);
+            var result = await api.ExportRedcapVersionAsync(GetToken(), ReturnFormat.json);
 
             // Assert
             Assert.Contains(expected, result);
