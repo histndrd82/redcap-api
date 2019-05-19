@@ -302,7 +302,7 @@ namespace Redcap
         /// </summary>
         /// <param name="token">The API token specific to your REDCap project and username (each token is unique to each user for each project). See the section on the left-hand menu for obtaining a token for a given project.</param>
         /// <param name="arms">an array of arm numbers that you wish to delete</param>
-        /// <returns>Number of Events deleted</returns>
+        /// <returns>Number of Arms deleted</returns>
         public async Task<string> DeleteArmsAsync(string token, string[] arms)
         {
             try
