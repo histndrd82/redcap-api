@@ -24,6 +24,7 @@ namespace Tests
         public string LastName { get; set; }
     }
     /// <summary>
+    /// Integrations Tests
     /// Very simplified test class for Redcap Api
     /// This is not a comprehensive test, add more if you'd like.
     /// Make sure you have some records in the redcap project for the instance you are testing
