@@ -547,9 +547,9 @@ namespace Redcap
                  * Check for presence of token
                  */
                 this.CheckToken(token);
-                if (data.Count < 1)
+                if (data.Count == 0 || data is null)
                 {
-                    throw new InvalidOperationException($"Events can not be empty or null");
+                    throw new InvalidOperationException("Unable to act on empty list.");
                 }
                 var _serializedData = JsonConvert.SerializeObject(data);
                 var payload = new Dictionary<string, string>
