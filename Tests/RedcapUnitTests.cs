@@ -49,14 +49,19 @@ namespace Tests
                 new RedcapArm{ArmNumber = "2", Name ="arm2" }
             };
         }
-        private List<RedcapEvent> CreateEvents()
+        private List<RedcapEvent> CreateEvents(int returnCount)
         {
-            return new List<RedcapEvent>
+            var events = new List<RedcapEvent>
             {
                 new RedcapEvent{ ArmNumber = "1", EventName = "Event 1"},
                 new RedcapEvent { ArmNumber = "2", EventName = "Event 2" },
                 new RedcapEvent{ ArmNumber = "3", EventName = "Event 3"}
             };
+            if(returnCount == 0)
+            {
+                return events;
+            }
+            return events.Take(returnCount).ToList();
         }
         #endregion
         #region ExportArmsAsync
@@ -169,24 +174,88 @@ namespace Tests
             Assert.Contains("2", result.ToString());
         }
         #endregion
+
         #region ExportEventsAsync
         [Fact]
-        public async void ExportEventsAsync_ShouldReturn_Num_Events()
+        public async void ExportEventsAsyncWithContent_ShouldReturn_Multiple_Events()
         {
             // create 3 events
-            var events = CreateEvents();
+            var events = CreateEvents(3);
+            var arms = new string[] { };
             var eventNames = events.Select(x => x.EventName).ToArray();
             // Mocking API Call and results
             var mock = new Mock<IRedcapApi>();
-            mock.Setup(x => x.DeleteArmsAsync(GetToken(), Content.Arm, RedcapAction.Delete, eventNames)).Returns(Task.FromResult(JsonConvert.SerializeObject(eventNames.Length)));
+            mock.Setup(x => x.ExportEventsAsync(GetToken(), Content.Event, ReturnFormat.json, arms, OnErrorFormat.json)).Returns(Task.FromResult(JsonConvert.SerializeObject(eventNames.Length)));
             var api = mock.Object;
 
             // Act
-            var armResult = await api.DeleteArmsAsync(GetToken(), Content.Arm, RedcapAction.Delete, eventNames);
-            var result = JsonConvert.DeserializeObject(armResult);
+            var eventResult = await api.ExportEventsAsync(GetToken(), Content.Event, ReturnFormat.json, arms, OnErrorFormat.json);
+            var result = JsonConvert.DeserializeObject(eventResult);
 
             // Assert
             Assert.Contains("3", result.ToString());
+
+        }
+        [Fact]
+        public async void ExportEventsAsync_ShouldReturn_Multiple_Events()
+        {
+            // create 3 events
+            var events = CreateEvents(3);
+            var arms = new string[] { };
+            var eventNames = events.Select(x => x.EventName).ToArray();
+            // Mocking API Call and results
+            var mock = new Mock<IRedcapApi>();
+            mock.Setup(x => x.ExportEventsAsync(GetToken(), ReturnFormat.json, arms, OnErrorFormat.json)).Returns(Task.FromResult(JsonConvert.SerializeObject(eventNames.Length)));
+            var api = mock.Object;
+
+            // Act
+            var eventResult = await api.ExportEventsAsync(GetToken(), ReturnFormat.json, arms, OnErrorFormat.json);
+            var result = JsonConvert.DeserializeObject(eventResult);
+
+            // Assert
+            Assert.Contains("3", result.ToString());
+
+        }
+        #endregion
+        #region ImportEventsAsync
+        [Fact]
+        public async void ImportEventsAsync_ShouldReturn_Single_Count()
+        {
+            // create 3 events
+            var events = CreateEvents(1);
+            var arms = new string[] { "testArm" };
+            var eventNames = events.Select(x => x.EventName).ToArray();
+            // Mocking API Call and results
+            var mock = new Mock<IRedcapApi>();
+            mock.Setup(x => x.ImportEventsAsync(GetToken(), Override.False, ReturnFormat.json, events, OnErrorFormat.json)).Returns(Task.FromResult(JsonConvert.SerializeObject(eventNames.Length)));
+            var api = mock.Object;
+
+            // Act
+            var eventResult = await api.ImportEventsAsync(GetToken(), Override.False, ReturnFormat.json, events, OnErrorFormat.json);
+            var result = JsonConvert.DeserializeObject(eventResult);
+
+            // Assert
+            Assert.Contains("1", result.ToString());
+
+        }
+        [Fact]
+        public async void ImportEventsAsync_ShouldReturn_Multiple_Counts()
+        {
+            // create 3 events
+            var events = CreateEvents(2);
+            var arms = new string[] { "testArm" };
+            var eventNames = events.Select(x => x.EventName).ToArray();
+            // Mocking API Call and results
+            var mock = new Mock<IRedcapApi>();
+            mock.Setup(x => x.ImportEventsAsync(GetToken(), Override.False, ReturnFormat.json, events, OnErrorFormat.json)).Returns(Task.FromResult(JsonConvert.SerializeObject(eventNames.Length)));
+            var api = mock.Object;
+
+            // Act
+            var eventResult = await api.ImportEventsAsync(GetToken(), Override.False, ReturnFormat.json, events, OnErrorFormat.json);
+            var result = JsonConvert.DeserializeObject(eventResult);
+
+            // Assert
+            Assert.Contains("2", result.ToString());
 
         }
         #endregion
