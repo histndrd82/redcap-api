@@ -49,6 +49,15 @@ namespace Tests
                 new RedcapArm{ArmNumber = "2", Name ="arm2" }
             };
         }
+        private List<RedcapEvent> CreateEvents()
+        {
+            return new List<RedcapEvent>
+            {
+                new RedcapEvent{ ArmNumber = "1", EventName = "Event 1"},
+                new RedcapEvent { ArmNumber = "2", EventName = "Event 2" },
+                new RedcapEvent{ ArmNumber = "3", EventName = "Event 3"}
+            };
+        }
         #endregion
         #region ExportArmsAsync
         [Fact]
@@ -131,7 +140,8 @@ namespace Tests
             var armNumbers = arms.Select(x => x.ArmNumber).ToArray();
             // Mocking API Call and results
             var mock = new Mock<IRedcapApi>();
-            mock.Setup(x => x.DeleteArmsAsync(GetToken(), armNumbers)).Returns(Task.FromResult(JsonConvert.SerializeObject(arms.Count)));
+            mock.Setup(x => x.DeleteArmsAsync(GetToken(), armNumbers))
+                .Returns(Task.FromResult(JsonConvert.SerializeObject(arms.Count)));
             var api = mock.Object;
 
             // Act
@@ -163,6 +173,20 @@ namespace Tests
         [Fact]
         public async void ExportEventsAsync_ShouldReturn_Num_Events()
         {
+            // create 3 events
+            var events = CreateEvents();
+            var eventNames = events.Select(x => x.EventName).ToArray();
+            // Mocking API Call and results
+            var mock = new Mock<IRedcapApi>();
+            mock.Setup(x => x.DeleteArmsAsync(GetToken(), Content.Arm, RedcapAction.Delete, eventNames)).Returns(Task.FromResult(JsonConvert.SerializeObject(eventNames.Length)));
+            var api = mock.Object;
+
+            // Act
+            var armResult = await api.DeleteArmsAsync(GetToken(), Content.Arm, RedcapAction.Delete, eventNames);
+            var result = JsonConvert.DeserializeObject(armResult);
+
+            // Assert
+            Assert.Contains("3", result.ToString());
 
         }
         #endregion
