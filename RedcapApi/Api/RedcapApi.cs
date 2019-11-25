@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using VCU.Redcap.Interfaces;
 using VCU.Redcap.Utilities;
 using static System.String;
+using static VCU.Redcap.Utilities.Utils;
 
 namespace VCU.Redcap
 {
@@ -28,7 +29,6 @@ namespace VCU.Redcap
         /// </list>
         /// </summary>
         private static Uri _uri;
-
         /// <summary>
         /// Constructor requires a valid URI.
         /// </summary>
@@ -36,14 +36,46 @@ namespace VCU.Redcap
         /// https://localhost/redcap/api
         /// </example>
         /// <remarks>
-        /// This is the default constructor for version 1.0+
+        /// This is the default constructor
+        /// </remarks>
+        /// 
+        /// <param name="redcapApiUri">Redcap instance URI</param>
+        public RedcapApi(string redcapApiUri)
+        {
+            // remove any trailing chars 
+            var _tempUri = redcapApiUri.TrimEnd('/', '\\', ' ');
+            if (Utils.IsValidUri(_tempUri)) {
+                _uri = new Uri(_tempUri);
+            }
+            else
+            {
+                throw new InvalidOperationException($"Uri: {redcapApiUri} is invalid. Make sure this is a valid Uri.");
+            }
+        }
+        /// <summary>
+        /// Constructor requires a valid URI.
+        /// </summary>
+        /// <example>
+        /// https://localhost/redcap/api
+        /// </example>
+        /// <remarks>
+        /// This constructor provides the ability to use with non ssl certificates.
         /// </remarks>
         /// 
         /// <param name="redcapApiUri">Redcap instance URI</param>
         /// <param name="useInsecureCertificates">Allows use of insecure certificates in HttpClient</param>
         public RedcapApi(string redcapApiUri, bool useInsecureCertificates = false)
         {
-            _uri = new Uri(redcapApiUri);
+            // remove any trailing chars 
+            var _tempUri = redcapApiUri.TrimEnd('/', '\\', ' ');
+            if (Utils.IsValidUri(_tempUri))
+            {
+                _uri = new Uri(_tempUri);
+            }
+            else
+            {
+                throw new InvalidOperationException($"Uri: {redcapApiUri} is invalid. Make sure this is a valid Uri.");
+            }
             Utils.UseInsecureCertificate = useInsecureCertificates;
         }
 
