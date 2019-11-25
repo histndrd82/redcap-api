@@ -3,6 +3,7 @@
 namespace VCU.Redcap.Models
 {
     /// <summary>
+    /// Redcap API Return Format.
     /// The format that the response object should be when returned from the http request.
     /// Format, 0 = JSON
     /// Format, 1 = CSV

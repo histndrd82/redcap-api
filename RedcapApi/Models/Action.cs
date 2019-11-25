@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace VCU.Redcap.Models
 {
     /// <summary>
-    /// API Action 
+    /// Redcap API Actions 
     /// </summary>
     public enum RedcapAction
     {

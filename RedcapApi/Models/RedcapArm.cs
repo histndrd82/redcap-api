@@ -3,6 +3,7 @@
 namespace VCU.Redcap.Models
 {
     /// <summary>
+    /// Redcap API Arms
     /// Arms are only available for longitudinal projects.
     /// </summary>
     public class RedcapArm

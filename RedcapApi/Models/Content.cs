@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace VCU.Redcap.Models
 {
     /// <summary>
-    /// Redcap Content Model
+    /// Redcap API Content
     /// </summary>
     public enum Content
     {
