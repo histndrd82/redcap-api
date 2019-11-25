@@ -95,9 +95,10 @@ namespace VCU.Redcap.Utilities
         /// <summary>
         /// Determines if the string is a valid URI.
         /// </summary>
+        /// <param name="redcapApi"></param>
         /// <param name="uri">URI string</param>
         /// <returns></returns>
-        public static bool IsValidUri(this string uri)
+        public static bool IsValidUri(this RedcapApi redcapApi, string uri)
         {
             bool IsValidUri = Uri.TryCreate(uri, UriKind.Absolute, out _uri);
             return IsValidUri;
