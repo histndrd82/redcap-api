@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Redcap.Models
+namespace VCU.Redcap.Models
 {
     /// <summary>
     /// Redcap Content Model

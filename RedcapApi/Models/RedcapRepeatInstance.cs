@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Redcap.Models
+namespace VCU.Redcap.Models
 {
     /// <summary>
     /// A single repeat instance in redcap

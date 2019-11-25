@@ -1,4 +1,4 @@
-﻿namespace Redcap.Models
+﻿namespace VCU.Redcap.Models
 {
     /// <summary>
     /// normal - blank/empty values will be ignored [default]

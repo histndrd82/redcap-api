@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Redcap.Models
+namespace VCU.Redcap.Models
 {
     /// <summary>
     /// Redcap Repeat Instrument

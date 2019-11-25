@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Redcap.Models
+namespace VCU.Redcap.Models
 {
     /// <summary>
     /// Represents the status of the record in redcap

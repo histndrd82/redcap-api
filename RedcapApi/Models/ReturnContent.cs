@@ -1,4 +1,4 @@
-﻿namespace Redcap.Models
+﻿namespace VCU.Redcap.Models
 {
     /// <summary>
     /// The content that the response object should contain from Redcap API.

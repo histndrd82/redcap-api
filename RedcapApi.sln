@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Redcap", "RedcapApi\Redcap.csproj", "{E34E88C8-D30F-4924-8108-8E84D14C2E9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedcapApi", "RedcapApi\RedcapApi.csproj", "{E34E88C8-D30F-4924-8108-8E84D14C2E9A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedcapApiDemo", "RedcapApiDemo\RedcapApiDemo.csproj", "{CBAF5212-0D5F-44F1-A7C5-F1B0ED7AF43E}"
 EndProject

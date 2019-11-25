@@ -1,4 +1,4 @@
-﻿namespace Redcap.Models
+﻿namespace VCU.Redcap.Models
 {
     /// <summary>
     /// MetaData, the data dictionary for a particular variable in redcap

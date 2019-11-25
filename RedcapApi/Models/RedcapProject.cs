@@ -1,4 +1,4 @@
-﻿namespace Redcap.Models
+﻿namespace VCU.Redcap.Models
 {
     /// <summary>
     /// Minimum redcap project information when creating a project
