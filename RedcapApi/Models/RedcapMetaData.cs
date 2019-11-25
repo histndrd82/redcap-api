@@ -1,4 +1,6 @@
-﻿namespace VCU.Redcap.Models
+﻿using Newtonsoft.Json;
+
+namespace VCU.Redcap.Models
 {
     /// <summary>
     /// MetaData, the data dictionary for a particular variable in redcap
@@ -8,75 +10,111 @@
         /// <summary>
         /// field name
         /// </summary>
-        public string field_name { get; set; }
+        /// 
+        [JsonProperty("field_name")]
+        public string FieldName { get; set; }
         /// <summary>
         /// the form name / instrument name
         /// </summary>
-        public string form_name { get; set; }
+        /// 
+        [JsonProperty("form_name")]
+        public string FormName { get; set; }
         /// <summary>
         /// section header of instrument / form
         /// </summary>
-        public string section_header { get; set; }
+        /// 
+        [JsonProperty("section_header")]
+        public string SectionHeader { get; set; }
         /// <summary>
         /// the type of field, i.e "text", "radio"
         /// </summary>
-        public string field_type { get; set; }
+        /// 
+        [JsonProperty("field_type")]
+        public string FieldType { get; set; }
         /// <summary>
         /// the label for the field, "first name"
         /// </summary>
-        public string field_label { get; set; }
+        /// 
+        [JsonProperty("field_label")]
+        public string FieldLabel { get; set; }
         /// <summary>
         /// Choices, Calculations, OR Slider Labels
         /// </summary>
-        public string select_choices_or_calculations { get; set; }
+        /// 
+        [JsonProperty("select_choices_or_calculations")]
+        public string SelectChoicesOrCalculations { get; set; }
         /// <summary>
         /// field not, special instruction for the label
         /// </summary>
-        public string field_note { get; set; }
+        /// 
+        [JsonProperty("field_note")]
+        public string FieldNote { get; set; }
         /// <summary>
         /// ui field validation
         /// </summary>
-        public string text_validation_type_or_show_slider_number { get; set; }
+        /// 
+        [JsonProperty("text_validation_type_or_show_slider_number")]
+        public string TextValidationTypeOrShowSliderNumber { get; set; }
         /// <summary>
         /// min value if int/num
         /// </summary>
-        public string text_validation_min { get; set; }
+        /// 
+        [JsonProperty("text_validation_min")]
+        public string TextValidationMin { get; set; }
         /// <summary>
         /// max value if int/num
         /// </summary>
-        public string text_validation_max { get; set; }
+        /// 
+        [JsonProperty("text_validation_max")]
+        public string TextValidationMax { get; set; }
         /// <summary>
         /// flag
         /// </summary>
-        public string identifier { get; set; }
+        /// 
+        [JsonProperty("identifier")]
+        public string Identifier { get; set; }
         /// <summary>
         /// the branching logic
         /// </summary>
-        public string branching_logic { get; set; }
+        /// 
+        [JsonProperty("branching_logic")]
+        public string BranchingLogic { get; set; }
         /// <summary>
         /// flag
         /// </summary>
-        public string required_field { get; set; }
+        /// 
+        [JsonProperty("required_field")]
+        public string RequiredField { get; set; }
         /// <summary>
         /// LH, RH etc
         /// </summary>
-        public string custom_alignment { get; set; }
+        /// 
+        [JsonProperty("custom_alignment")]
+        public string CustomAlignment { get; set; }
         /// <summary>
         /// if numbered
         /// </summary>
-        public string question_number { get; set; }
+        /// 
+        [JsonProperty("question_number")]
+        public string QuestionNumber { get; set; }
         /// <summary>
         /// is this a matrix group question, what is the name of the group
         /// </summary>
-        public string matrix_group_name { get; set; }
+        /// 
+        [JsonProperty("matrix_group_name")]
+        public string MatrixGroupName { get; set; }
         /// <summary>
         /// the rank
         /// </summary>
-        public string maxtrix_ranking { get; set; }
+        /// 
+        [JsonProperty("maxtrix_ranking")]
+        public string MatrixRanking { get; set; }
         /// <summary>
         /// field annotation
         /// </summary>
-        public string field_annotation { get; set; }
+        /// 
+        [JsonProperty("field_annotation")]
+        public string FieldAnnotation { get; set; }
 
     }
 

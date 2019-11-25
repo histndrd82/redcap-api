@@ -4,6 +4,10 @@ namespace VCU.Redcap.Models
 {
     /// <summary>
     /// Used to erase existing arms in the project or only add new ones
+    /// <list type="none">
+    ///     <item>true — You may use override=1 as a 'delete all + import' action in order to erase all existing Arms in the project while importing new Arms.</item>
+    ///     <item>false [default] If override=0, then you can only add new Arms or rename existing ones.</item>
+    /// </list>
     /// </summary>
     public enum Override
     {

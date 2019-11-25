@@ -4,10 +4,12 @@ namespace VCU.Redcap.Models
 {
     /// <summary>
     /// The data format which the Redcap API endpoint should receive.
-    /// RedcapDataType, 0 = flat
-    /// RedcapDataType, 1 = eav
-    /// RedcapDataType, 2 = nonlogitudinal
-    /// RedcapDataType, 3 = longitudinal
+    /// <list type="none">
+    ///     <item>RedcapDataType => 0 = flat</item>
+    ///     <item>RedcapDataType => 1 = eav</item>
+    ///     <item>RedcapDataType => 2 = nonlogitudinal</item>
+    ///     <item>RedcapDataType => 3 = longitudinal</item>
+    /// </list>
     /// </summary>
     public enum RedcapDataType
     {

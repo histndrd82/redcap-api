@@ -3,11 +3,12 @@
 namespace VCU.Redcap.Models
 {
     /// <summary>
-    /// Redcap API Return Format.
     /// The format that the response object should be when returned from the http request.
-    /// Format, 0 = JSON
-    /// Format, 1 = CSV
-    /// Format, 2 = XML
+    /// <list type="none">
+    ///     <item>Format, 0 = JSON</item>
+    ///     <item>Format, 1 = CSV</item>
+    ///     <item>Format, 2 = XML</item>
+    /// </list>
     /// </summary>
     public enum ReturnFormat
     {

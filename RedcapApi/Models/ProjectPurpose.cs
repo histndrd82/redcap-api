@@ -4,9 +4,11 @@ using System.ComponentModel.DataAnnotations;
 namespace VCU.Redcap.Models
 {
     /// <summary>
-    /// Redcap API Purpose
     /// This is a direct translation of redcap purpose.
-    /// raw [default], label - export the raw coded values or labels for the options of multiple choice fields
+    /// <list type="none">
+    ///     <item>raw [default]</item>
+    ///     <item>label - export the raw coded values or labels for the options of multiple choice fields</item>
+    /// </list> 
     /// </summary>
     public enum ProjectPurpose
     {
@@ -16,7 +18,7 @@ namespace VCU.Redcap.Models
         /// 
         [Display(Name = "Pratice or For Fun")]
         [Description("Pratice or For Fun")]
-        Pratice_ForFun = 0,
+        PraticeForFun = 0,
 
         /// <summary>
         /// Other

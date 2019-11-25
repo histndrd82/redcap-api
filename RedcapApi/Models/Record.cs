@@ -10,6 +10,6 @@ namespace VCU.Redcap.Models
         /// <summary>
         /// A record value contains a key and its associated value.
         /// </summary>
-        public Dictionary<string, string>[] Value { get; set; }
+        public Dictionary<string, string>[] KeyValue { get; set; }
     }
 }

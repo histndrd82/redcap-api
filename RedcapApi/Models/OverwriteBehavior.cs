@@ -1,8 +1,10 @@
 ﻿namespace VCU.Redcap.Models
 {
     /// <summary>
-    /// normal - blank/empty values will be ignored [default]
-    /// overwrite - blank/empty values are valid and will overwrite data
+    /// <list type="none">
+    ///     <item>normal - blank/empty values will be ignored [default]</item>
+    ///     <item>overwrite - blank/empty values are valid and will overwrite data</item>
+    /// </list>
     /// </summary>
     public enum OverwriteBehavior
     {

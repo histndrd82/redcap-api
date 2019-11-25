@@ -6,7 +6,7 @@ using System.Text;
 namespace VCU.Redcap.Models
 {
     /// <summary>
-    /// A single repeat instance in redcap
+    /// A single repeating instance in redcap
     /// </summary>
     public class RedcapRepeatInstance
     {

@@ -2166,7 +2166,7 @@ namespace VCU.Redcap
         /// project_title, project_language, purpose, purpose_other, project_notes, custom_record_label, secondary_unique_field, is_longitudinal, surveys_enabled, scheduling_enabled, record_autonumbering_enabled, randomization_enabled, project_irb_number, project_grant_number, project_pi_firstname, project_pi_lastname, display_today_now_button
         /// </param>
         /// <returns>Returns the number of values accepted to be updated in the project settings (including values which remained the same before and after the import).</returns>
-        public async Task<string> ImportProjectInfoAsync(string token, Content content, ReturnFormat format, RedcapProjectInfo projectInfo)
+        public async Task<string> ImportProjectInfoAsync(string token, Content content, ReturnFormat format, RedcapProjectDetail projectInfo)
         {
             try
             {
@@ -2210,7 +2210,7 @@ namespace VCU.Redcap
         /// project_title, project_language, purpose, purpose_other, project_notes, custom_record_label, secondary_unique_field, is_longitudinal, surveys_enabled, scheduling_enabled, record_autonumbering_enabled, randomization_enabled, project_irb_number, project_grant_number, project_pi_firstname, project_pi_lastname, display_today_now_button
         /// </param>
         /// <returns>Returns the number of values accepted to be updated in the project settings (including values which remained the same before and after the import).</returns>
-        public async Task<string> ImportProjectInfoAsync(string token, ReturnFormat format, RedcapProjectInfo projectInfo)
+        public async Task<string> ImportProjectInfoAsync(string token, ReturnFormat format, RedcapProjectDetail projectInfo)
         {
             try
             {

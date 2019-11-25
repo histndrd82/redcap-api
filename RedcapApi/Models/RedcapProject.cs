@@ -28,37 +28,32 @@ namespace VCU.Redcap.Models
         /// 
         [JsonProperty("purpose")]
         public ProjectPurpose Purpose { get; set; }
-        /// <summary>
-        /// Other purpose
-        /// </summary>
-        /// 
-        [JsonProperty("purpose_other")]
-        public string PurposeOther { get; set; }
-        /// <summary>
-        /// Any project notes?
-        /// </summary>
-        /// 
-        [JsonProperty("project_notes")]
-        public string ProjectNotes { get; set; }
-        /// <summary>
-        /// A project that contains instruments or forms that spans over time.
-        /// </summary>
-        /// 
-        [JsonProperty("is_longitudinal")]
-        public bool IsLongitudinal { get; set; }
-        /// <summary>
-        /// Will surveys be enabled for this project?
-        /// </summary>
-        /// 
-        [JsonProperty("surveys_enabled")]
-        public bool SurveysEnabled { get; set; }
-        /// <summary>
-        /// Will auto numbering be enabled for this project?
-        /// </summary>
-        /// 
-        [JsonProperty("record_autonumbering_enabled")]
-        public bool RecordAutoNumberingEnabled { get; set; }
 
+        /// <summary>
+        /// Details related to the project
+        /// </summary>
+        public RedcapProjectDetail RedcapProjectDetail { get; set; }
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public RedcapProject()
+        {
+            ProjectTitle = string.Empty;
+            Purpose = ProjectPurpose.PraticeForFun;
+        }
+        /// <summary>
+        /// Constructor overload
+        /// </summary>
+        /// <param name="projectTitle"></param>
+        /// <param name="purpose"></param>
+        /// <param name="projectDetail"></param>
+        public RedcapProject(string projectTitle, ProjectPurpose purpose, RedcapProjectDetail projectDetail)
+        {
+            ProjectTitle = projectTitle;
+            Purpose = purpose;
+            RedcapProjectDetail = projectDetail;
+        }
     }
 
 }
