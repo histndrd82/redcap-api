@@ -91,7 +91,17 @@ namespace VCU.Redcap.Utilities
         /// Controls how strictly a certificate's credentials are observed, for example over ssh tunnels.
         /// </summary>
         internal static bool UseInsecureCertificate = false;
-
+        internal static Uri _uri;
+        /// <summary>
+        /// Determines if the string is a valid URI.
+        /// </summary>
+        /// <param name="uri">URI string</param>
+        /// <returns></returns>
+        public static bool IsValidUri(this string uri)
+        {
+            bool IsValidUri = Uri.TryCreate(uri, UriKind.Absolute, out _uri);
+            return IsValidUri;
+        }
         /// <summary>
         /// Method gets the display string for an enum
         /// </summary>
