@@ -44,7 +44,7 @@ namespace VCU.Redcap
         {
             // remove any trailing chars 
             var _tempUri = redcapApiUri.TrimEnd('/', '\\', ' ');
-            if (Utils.IsValidUri(_tempUri)) {
+            if (this.IsValidUri(_tempUri)) {
                 _uri = new Uri(_tempUri);
             }
             else
@@ -68,7 +68,7 @@ namespace VCU.Redcap
         {
             // remove any trailing chars 
             var _tempUri = redcapApiUri.TrimEnd('/', '\\', ' ');
-            if (Utils.IsValidUri(_tempUri))
+            if (this.IsValidUri(_tempUri))
             {
                 _uri = new Uri(_tempUri);
             }
