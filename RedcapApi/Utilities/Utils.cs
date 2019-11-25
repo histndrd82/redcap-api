@@ -661,7 +661,7 @@ namespace VCU.Redcap.Utilities
         {
             try
             {
-                string _responseMessage = Empty;
+                var _responseMessage = Empty;
 
                 using (var handler = GetHttpHandler())
                 using (var client = new HttpClient(handler))
