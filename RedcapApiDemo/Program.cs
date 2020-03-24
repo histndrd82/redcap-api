@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using Redcap;
-using Redcap.Models;
+using VCU.Redcap;
+using VCU.Redcap.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -408,7 +408,7 @@ namespace RedcapApiDemo
             Console.ReadLine();
 
             #region CreateProjectAsync()
-            var projectData = new List<RedcapProject> { new RedcapProject { project_title = "Amazing Project ", purpose = ProjectPurpose.Other, purpose_other = "Test" } };
+            var projectData = new List<RedcapProject> { new RedcapProject { ProjectTitle = "Amazing Project ", purpose = ProjectPurpose.Other, PurposeOther = "Test" } };
             Console.WriteLine($"Calling CreateProjectAsync(), creating a new project with Amazing Project as title, purpose 1 (other) ");
             Console.WriteLine($"-----------------------Notice the use of SUPER TOKEN------------------------");
             var CreateProjectAsyncResult = redcap_api_1_0_7.CreateProjectAsync(_superToken, Content.Project, ReturnFormat.json, projectData, OnErrorFormat.json, null).Result;
@@ -418,7 +418,7 @@ namespace RedcapApiDemo
             Console.ReadLine();
 
             #region ImportProjectInfoAsync()
-            var projectInfo = new RedcapProjectInfo { ProjectTitle = "Updated Amazing Project ", Purpose = ProjectPurpose.QualityImprovement, SurveysEnabled = 1 };
+            var projectInfo = new RedcapProjectDetail { ProjectTitle = "Updated Amazing Project ", Purpose = ProjectPurpose.QualityImprovement, SurveysEnabled = 1 };
             Console.WriteLine($"Calling ImportProjectInfoAsync()");
             var ImportProjectInfoAsyncResult = redcap_api_1_0_7.ImportProjectInfoAsync(_token, Content.ProjectSettings, ReturnFormat.json, projectInfo).Result;
             Console.WriteLine($"ImportProjectInfoAsyncResult: {ImportProjectInfoAsyncResult}");

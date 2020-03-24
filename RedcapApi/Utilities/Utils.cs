@@ -659,10 +659,9 @@ namespace VCU.Redcap.Utilities
         /// <returns></returns>
         public static async Task<string> SendPostRequestAsync(this RedcapApi redcapApi, Dictionary<string, string> payload, Uri uri, bool isLargeDataset = false)
         {
+            var _responseMessage = Empty;
             try
             {
-                var _responseMessage = Empty;
-
                 using (var handler = GetHttpHandler())
                 using (var client = new HttpClient(handler))
                 {
@@ -790,7 +789,7 @@ namespace VCU.Redcap.Utilities
             catch (Exception Ex)
             {
                 Log.Error($"{Ex.Message}");
-                return Empty;
+                return _responseMessage;
             }
         }
         /// <summary>
