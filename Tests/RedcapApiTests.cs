@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
-using Redcap;
-using Redcap.Models;
-using Redcap.Utilities;
+using VCU.Redcap;
+using VCU.Redcap.Models;
+using VCU.Redcap.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -146,7 +146,7 @@ namespace Tests
             // Expecting event names, form name and custom form labels
             // we imported it above
             Assert.Contains("event_name", result);
-            Assert.Contains("form_name", result);
+            Assert.Contains("FormName", result);
             Assert.Contains("custom_form_label", result);
             Assert.Contains("demographics", result);
             Assert.Contains("event_1_arm_1", result);
@@ -470,55 +470,55 @@ namespace Tests
             // This will wipe out the current data dictionary and update with the below meta.
             var metata = new List<RedcapMetaData> {
                 new RedcapMetaData{
-                    field_name ="record_id",
-                    form_name = "demographics",
-                    field_label ="Study Id",
-                    field_type ="text",
-                    section_header = "",
+                    FieldName ="record_id",
+                    FormName = "demographics",
+                    FieldLabel ="Study Id",
+                    FieldType ="text",
+                    SectionHeader = "",
                 },
                 new RedcapMetaData{
-                    field_name ="first_name",
-                    form_name = "demographics",
-                    field_label ="First Name",
-                    field_type ="text",
-                    section_header = "Contact Information",
-                    identifier = "y"
+                    FieldName ="first_name",
+                    FormName = "demographics",
+                    FieldLabel ="First Name",
+                    FieldType ="text",
+                    SectionHeader = "Contact Information",
+                    Identifier = "y"
                 },
                 new RedcapMetaData{
-                    field_name ="last_name",
-                    form_name = "demographics",
-                    field_label ="Last Name",
-                    field_type ="text",
-                    identifier = "y"
+                    FieldName ="last_name",
+                    FormName = "demographics",
+                    FieldLabel ="Last Name",
+                    FieldType ="text",
+                    Identifier = "y"
                 },
                 new RedcapMetaData{
-                    field_name ="address",
-                    form_name = "demographics",
-                    field_label ="Street, City, State, ZIP",
-                    field_type ="notes",
-                    identifier = "y"
+                    FieldName ="address",
+                    FormName = "demographics",
+                    FieldLabel ="Street, City, State, ZIP",
+                    FieldType ="notes",
+                    Identifier = "y"
                 },
                 new RedcapMetaData{
-                    field_name ="email",
-                    form_name = "demographics",
-                    field_label ="E-mail",
-                    field_type ="text",
-                    identifier = "y",
-                    text_validation_type_or_show_slider_number = "email"
+                    FieldName ="email",
+                    FormName = "demographics",
+                    FieldLabel ="E-mail",
+                    FieldType ="text",
+                    Identifier = "y",
+                    TextValidationTypeOrShowSliderNumber = "email"
                 },
                 new RedcapMetaData{
-                    field_name ="dob",
-                    form_name = "demographics",
-                    field_label ="Date of Birth",
-                    field_type ="text",
-                    identifier = "y",
-                    text_validation_type_or_show_slider_number = "date_ymd"
+                    FieldName ="dob",
+                    FormName = "demographics",
+                    FieldLabel ="Date of Birth",
+                    FieldType ="text",
+                    Identifier = "y",
+                    TextValidationTypeOrShowSliderNumber = "date_ymd"
                 },
                 new RedcapMetaData{
-                    field_name ="file_upload",
-                    form_name = "demographics",
-                    field_label ="File Upload",
-                    field_type ="file"
+                    FieldName ="file_upload",
+                    FormName = "demographics",
+                    FieldLabel ="File Upload",
+                    FieldType ="file"
                 }
             };
             // Act
@@ -537,55 +537,55 @@ namespace Tests
             // This will wipe out the current data dictionary and update with the below meta.
             var metata = new List<RedcapMetaData> {
                 new RedcapMetaData{
-                    field_name ="record_id",
-                    form_name = "demographics",
-                    field_label ="Study Id",
-                    field_type ="text",
-                    section_header = "",
+                    FieldName ="record_id",
+                    FormName = "demographics",
+                    FieldLabel ="Study Id",
+                    FieldType ="text",
+                    SectionHeader = "",
                 },
                 new RedcapMetaData{
-                    field_name ="first_name",
-                    form_name = "demographics",
-                    field_label ="First Name",
-                    field_type ="text",
-                    section_header = "Contact Information",
-                    identifier = "y"
+                    FieldName ="first_name",
+                    FormName = "demographics",
+                    FieldLabel ="First Name",
+                    FieldType ="text",
+                    SectionHeader = "Contact Information",
+                    Identifier = "y"
                 },
                 new RedcapMetaData{
-                    field_name ="last_name",
-                    form_name = "demographics",
-                    field_label ="Last Name",
-                    field_type ="text",
-                    identifier = "y"
+                    FieldName ="last_name",
+                    FormName = "demographics",
+                    FieldLabel ="Last Name",
+                    FieldType ="text",
+                    Identifier = "y"
                 },
                 new RedcapMetaData{
-                    field_name ="address",
-                    form_name = "demographics",
-                    field_label ="Street, City, State, ZIP",
-                    field_type ="notes",
-                    identifier = "y"
+                    FieldName ="address",
+                    FormName = "demographics",
+                    FieldLabel ="Street, City, State, ZIP",
+                    FieldType ="notes",
+                    Identifier = "y"
                 },
                 new RedcapMetaData{
-                    field_name ="email",
-                    form_name = "demographics",
-                    field_label ="E-mail",
-                    field_type ="text",
-                    identifier = "y",
-                    text_validation_type_or_show_slider_number = "email"
+                    FieldName ="email",
+                    FormName = "demographics",
+                    FieldLabel ="E-mail",
+                    FieldType ="text",
+                    Identifier = "y",
+                    TextValidationTypeOrShowSliderNumber = "email"
                 },
                 new RedcapMetaData{
-                    field_name ="dob",
-                    form_name = "demographics",
-                    field_label ="Date of Birth",
-                    field_type ="text",
-                    identifier = "y",
-                    text_validation_type_or_show_slider_number = "date_ymd"
+                    FieldName ="dob",
+                    FormName = "demographics",
+                    FieldLabel ="Date of Birth",
+                    FieldType ="text",
+                    Identifier = "y",
+                    TextValidationTypeOrShowSliderNumber = "date_ymd"
                 },
                 new RedcapMetaData{
-                    field_name ="file_upload",
-                    form_name = "demographics",
-                    field_label ="File Upload",
-                    field_type ="file"
+                    FieldName ="file_upload",
+                    FormName = "demographics",
+                    FieldLabel ="File Upload",
+                    FieldType ="file"
                 }
             };
             // import 7 metadata fields into the project
